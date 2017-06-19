@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "copper-axiom-168220",
+  "private_key_id": "a8566319fc34a95f363252cf197ea6c8d9f87212",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC47LdGepxWi4ax\nnhhJIeMzfC4NUORurchW4ySmhDM8TXFOwd/24oHNBesVS1IWxH609eNiHOiODYfa\nt4NAgaAbljZxxpbAOVTrnKt5kRqXHZoe/3V5d5P75qo/LGyikvJUwp/WK8a8zfzl\ns37io9QVjZo7PBeSVW2MK3ReY1GgyAVoIfxJW8k8anil9qwyszM29lrOggdIbgVG\nl33x21052vqMIl682j/EUSITsxUjDYGsmk2OoSphj4T5DA4Dn+H3Y7lxDZhFNEaq\n5gLtZ3D+TG1n+waRCTYuf7gpsI8P8s8lElRiZ5AHuOD3DmvqY9jSrMYfmfTrGF/p\njKGv6uTtAgMBAAECggEANzl9/B62nIPbbCSl5QUpOCFgEVr0dPcR6py3v8CgGmSY\nL2hnjW+UStl3HGtbbvAsVLdPueefLXjt9sux9ywe184yoSSotWwJp7koXkwOkE1n\nTtWETAuBVotKkUYfhSd0FgrvN8Ln/U9YtHI3tNAvEGayxfjKo0k+x0rc3Ck14dkH\no8mFKvKas1+nUDo8Pfm/+9rq1/EoL/EaQXD36lPXmBOf3P0A0fVSQrZRzu1zrhEg\nmjpkN3E6DO79aKbHoh2OLAnHy64gNTbG8/Bj4owYW4QsOyU6IFGvMjd4Wjg15G3H\ng0n50LCjiqlzaLE+v/O6C17tWL0yxJYIuHC5gn8UswKBgQDrfd83aiFKf5+gOa/E\nfjeqCQ8WZ4kRTkAN1GpO9UFNxfx1iDPIZhEAXtBZkWoA3mQINXoMgh6tnrub19jL\nIOnABg52+UxvUQv17MwizdiFkg5xOx7is7gDuhuKb4Qmjinv2pJj0vGFdsGwq6SD\nnw26y1yH5XKPDkjqn0RmH2tmCwKBgQDJB3yNNZ0IfF4WVwBWa4O31CDgZHy8b5w1\n+by6X1qxs3Zm0XGpDQFR3YhqUJpxhFvY+P5HZRwHpsosqu0bstQpO9UK76Yp79Ws\nF5khAjaH9znSgq++AGNGFuKQybmdUruXCpisTjX9pvJwiU0FO1OUbFHIoIadjfPC\nJLrAOK0T5wKBgCXw9sjX2ZtGKrLG+JHBADjuErc6YTQflmRkB+jGzQm5z24kTquH\n/k8/93Om4RxYuGc2Ln7bbBPvEi0OvsgjemXM1AHJMs5wkWvDBjTJU4xZtuf5bYV7\nDTfUgWFxjComF42kepeIwg8NzjEnxm7Kbozc/QCMMEPqOkdK99s4TrZ3AoGANGES\n/ugdRnzBNyjsGZhh9Z/8APut1JtwJFAx8I2v3+VW0Gt6JgYRdfc2+ByQYUuPcvVN\nq+SYbRX0T7cpmLH7vdKtK/BNZ1fqYLC1YXhmJP8xvbv3dpY7R6Pm3Lry9h78adqE\n9UBbqP+647+ipd5TZLTkilXpPVwjS06uqi8aSbkCgYBrC9FJbHU0BgLfdLGvTHkx\npU0DlfQDiCYf5NPN2GCDk/FwJzHuv1HFWPHMbnpsWjlXN58cj/++jj9mV55NiPC6\niTLfnT34ODaV53aK9AuYR3MFIod93FIcXWeXqXuhrKw6Iod4h94CdRSG34H2/jgL\n+0UOgv4J4BXq+aPrgQnyFQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "copper-axiom-168220@appspot.gserviceaccount.com",
+  "client_id": "113976727922218174827",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/copper-axiom-168220%40appspot.gserviceaccount.com"
+}
