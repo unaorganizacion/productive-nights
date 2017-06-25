@@ -105,7 +105,7 @@ module.exports = function (datastore, userObject, quick_reply) {
       let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, mode, categories);
       //console.log("quick replies", categoriesQuickResponse);
       if (mode === MODE_ADD)
-        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar \"hecho\" para continuar", 
+        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar HECHO para continuar", 
                                     categoriesQuickResponse);
       else if (mode === MODE_REMOVE)
         sendMessage.sendTextMessage(userObject.mId, "Listo, ¿alguna otra categoría que quieras quitar de tus intereses?, También puedes seleccionar HECHO si deseas terminar", 
