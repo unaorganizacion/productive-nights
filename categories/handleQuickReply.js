@@ -45,7 +45,7 @@ module.exports = function (datastore, userObject, quick_reply) {
     sendMessage.sendTextMessage(userObject.mId, "¡Genial! En cualquier momento comenzarás a recibir mensajes con ofertas y promociones para ti", [], function(){}, 
                                [{
                                  "type":"postback",
-                                  "title":"Ver ofertas de hoy",
+                                  "title":"Ver mis ofertas de hoy",
                                   "payload":"TODAY_PAYLOAD"
                                }]);
     return;
@@ -56,7 +56,7 @@ module.exports = function (datastore, userObject, quick_reply) {
   if (categorySP[1].toLowerCase() === "remove") {
     let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, MODE_REMOVE, categories);
     console.log("Remove categories button", categoriesQuickResponse);
-    sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir.", categoriesQuickResponse);
+    sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir", categoriesQuickResponse);
     return;
   }
   
