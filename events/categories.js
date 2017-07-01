@@ -16,13 +16,13 @@ event.prototype.run = function () {
   let self = this;
   
   new Promise(function (resolve, reject) {
-    sendMessage.sendTextMessage(self.userObject.mId, "¿Quieres quitar o agregar alguna categoría de tus intereses? ¡Yo te ayudo!", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, "Ofertas y promociones entrantes están retenidas en lo que configuras tus opciones, selecciona HECHO cuando termines para recibir nuevamente los mensajes", [], resolve);
   })
   .then(function () {
     return new Promise(function (resolve) {
       sendMessage.sendTextMessage(
         self.userObject.mId, 
-        "Ofertas y promociones entrantes están retenidas en lo que configuras tus opciones, recuerda seleccionar HECHO cuando termines para recibir nuevamente los mensajes.", 
+        "Seleccionar AGREGAR para seguir más categorías o QUITAR para dejar de seguirlas",
                                    [ {
                                       "content_type": "text",
                                       "title": "Agregar",

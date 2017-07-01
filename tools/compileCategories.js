@@ -1,5 +1,7 @@
+const MODE_ADD = 1;
+const MODE_REMOVE = 2;
 
-module.exports = function (locale, offset = 0, exceptions = []) {
+module.exports = function (interests = [], mode, locale, offset = 0, exceptions = []) {
   if (locale.includes("_")) {
     locale = locale.split("_")[0];
   }
@@ -9,9 +11,10 @@ module.exports = function (locale, offset = 0, exceptions = []) {
     categories = [],
     maxCategories = 9,
     countCategories = 0,
-    index = null
+    index = null,
+    lastIndex = null
   ;
-  
+
   categoriesList.sort(function(a, b) {
     let attrSort = 
         (typeof a.names[locale] !== 'undefined' && a.names[locale].length > 0) ?
@@ -33,6 +36,12 @@ module.exports = function (locale, offset = 0, exceptions = []) {
   
   for (let key in categoriesList) {
     let category = categoriesList[key];
+    if (
+        (mode === MODE_ADD && interests.indexOf(category.id) >= 0) ||
+        (mode === MODE_REMOVE && interests.indexOf(category.id) === -1)
+    ){
+        continue;
+    }
     // categories must have default name
     if (countCategories >= maxCategories) {
       index = key;
@@ -44,7 +53,7 @@ module.exports = function (locale, offset = 0, exceptions = []) {
     let categoryNameFound = false;
     for (let catLocale in category.names) {
       let name = category.names[catLocale];
-      if (catLocale == locale) {
+      if (catLocale === locale) {
         categories.push({
           id: category.id,
           name: name
@@ -54,17 +63,19 @@ module.exports = function (locale, offset = 0, exceptions = []) {
       }
     }
     
-    if (!categoryNameFound) {
+    if (!categoryNameFound && exceptions.indexOf(category.id) === -1) {
       categories.push({
         id: category.id,
         name: category.names["default"]
       });
       countCategories++;
     }
-    
+    lastIndex = key;
   }
   
   if (countCategories >= maxCategories) {
+    if (index === null)
+      index = lastIndex + 1;
     categories.push({
         id: index,
         name: "NEXT"

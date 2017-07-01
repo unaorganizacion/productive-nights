@@ -130,7 +130,7 @@ function receivedMessage(event, userObject) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendTextMessage(senderID, messageText.split('').reverse().join(''));
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");

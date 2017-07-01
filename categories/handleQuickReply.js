@@ -20,23 +20,27 @@ module.exports = function (datastore, userObject, quick_reply) {
     });
     return results;
   }
-  
+
+  /*if (userObject.restriction.level === 0) {
+    userObject.restriction.level = 1;
+  }*/
+
   let 
     categorySP = quick_reply.payload.split('_'),
     categories = [],
     category = {},
     mode = MODE_ADD,
-    notCategory = false
+    notCategory = false,
+    offset = 0
   ;
   category.name = categorySP[0].toLowerCase();
-  
+
   if (categorySP[1].toLowerCase() === "next") {
-    categories = require("../tools/compileCategories")(userObject.userData.locale, parseInt(categorySP[2]));
     mode = parseInt(categorySP[3]);
+    offset = parseInt(categorySP[2]);
+    categories = require("../tools/compileCategories")(userObject.userData.interest, mode, userObject.userData.locale, offset);
     notCategory = true;
     console.log("Next button", categories, mode);
-  } else {  
-    categories = require("../tools/compileCategories")(userObject.userData.locale);
   }
   
   console.log(categorySP, categorySP[1], categorySP[1].toLowerCase());
@@ -54,7 +58,9 @@ module.exports = function (datastore, userObject, quick_reply) {
   category.id = parseInt(categorySP[1]);
   
   if (categorySP[1].toLowerCase() === "remove") {
-    let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, MODE_REMOVE, categories);
+    mode = MODE_REMOVE;
+    categories = require("../tools/compileCategories")(userObject.userData.interest, mode, userObject.userData.locale, offset);
+    let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, MODE_REMOVE, categories, offset);
     console.log("Remove categories button", categoriesQuickResponse);
     sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir.", categoriesQuickResponse);
     return;
@@ -65,7 +71,7 @@ module.exports = function (datastore, userObject, quick_reply) {
     categories = []; // we need some extra data in order to get categories
   }
   
-  if (typeof userObject.interest == "undefined") {
+  if (typeof userObject.interest === "undefined") {
     userObject.interest = [];
   }
   
@@ -102,10 +108,10 @@ module.exports = function (datastore, userObject, quick_reply) {
         return;
       }
       userObject.id = entity.key.id;
-      let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, mode, categories);
+      let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, mode, categories, offset);
       //console.log("quick replies", categoriesQuickResponse);
       if (mode === MODE_ADD)
-        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar \"hecho\" para continuar", 
+        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar HECHO para continuar",
                                     categoriesQuickResponse);
       else if (mode === MODE_REMOVE)
         sendMessage.sendTextMessage(userObject.mId, "Listo, ¿alguna otra categoría que quieras quitar de tus intereses?, También puedes seleccionar HECHO si deseas terminar", 
