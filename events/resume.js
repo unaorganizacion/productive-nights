@@ -1,6 +1,7 @@
 /**
  * Created by andre on 1/07/17.
  */
+ let botMessages = require('../messages/bot-msgs');
 const
     sendMessage = require('../tools/sendMessage'),
     PAUSED = 1,
@@ -37,11 +38,16 @@ event.prototype.run = function () {
     let action = null;
 
     if (this.userObject.restriction < 2 || typeof this.userObject.restriction !== "number") {
-        sendMessage.sendTextMessage(this.userObject.mId, "¡Genial! En cualquier momento comenzarás a recibir mensajes con ofertas y promociones para ti", [], function () {},
+        sendMessage.sendTextMessage(this.userObject.mId, botMessages.START_SENDING_OFFERS, [], function () {},
             [{
                 "type": "postback",
-                "title": "Ver ofertas de hoy",
+                "title": botMessages.START_SENDING_OFFERS_BUTTON1,
                 "payload": "TODAY_PAYLOAD"
+            },
+            {
+                "type": "postback",
+                "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                "payload": "SHARE_PAYLOAD"
             }]);
         return;
 
@@ -64,12 +70,17 @@ event.prototype.run = function () {
             return;
         }
 
-        sendMessage.sendTextMessage(this.userObject.mId, "¡Genial! En cualquier momento comenzarás a recibir mensajes con ofertas y promociones para ti", [], function () {},
-            [{
-                "type": "postback",
-                "title": "Ver ofertas de hoy",
-                "payload": "TODAY_PAYLOAD"
-            }]);
+        sendMessage.sendTextMessage(this.userObject.mId, botMessages.START_SENDING_OFFERS, [], function () {},
+        [{
+            "type": "postback",
+            "title": botMessages.START_SENDING_OFFERS_BUTTON1,
+            "payload": "TODAY_PAYLOAD"
+        },
+        {
+            "type": "postback",
+            "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+            "payload": "SHARE_PAYLOAD"
+        }]);
     });
 };
 
