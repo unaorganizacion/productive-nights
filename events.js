@@ -4,6 +4,7 @@ let events = [
   "TOGGLE_OFFERTS_PAYLOAD", // Pausar / Reanudar mensajes
   "CONTACT_PAYLOAD", // Contacto
   "STARTER_PAYLOAD", // Get started
+  "RESUME_OFFERTS_PAYLOAD"
 ];
 
 // only that day deals
