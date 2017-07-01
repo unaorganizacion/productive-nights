@@ -23,7 +23,12 @@ event.prototype.run = function () {
       sendMessage.sendTextMessage(self.userObject.mId, "Por ahora solo conozco las de Chihuahua, Chihuahua. ¡Pero pronto agregaré más ciudades :D!", [], resolve);
     });
   })
-  // todo: select random offer in the pool today-offers?
+  /* .then(function () {
+    return new Promise(function (resolve) {
+      sendMessage.sendTextMessage(self.userObject.mId, "Solo por haberme agregado te voy a regalar...", [], resolve);
+    }); 
+  }) */
+  // todo: select random offer in the pool today-offers
   .then(function () {
     return new Promise(function (resolve) {
       let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(self.userObject);

@@ -157,7 +157,7 @@ function receivedPostback(event, userObject) {
     events.get(userObject, payload).run();
   } catch (e) {
     console.error("Error retrieving event object.", e);
-    sendTextMessage(senderID, "Disculpa, algo salio mal. Vuelve a intentarlo nuevamente.");
+    sendTextMessage(senderID, "Disculpa, no entendí eso :( , deberías seleccionar una opción del menú :D.");
   }
 }
 
