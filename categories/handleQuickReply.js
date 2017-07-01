@@ -1,3 +1,4 @@
+let botMessages = require('../messages/bot-msgs');
 const sendMessage = require('../tools/sendMessage');
 const utilities = require('../tools/utilities');
 
@@ -25,7 +26,7 @@ module.exports = function (datastore, userObject, quick_reply) {
     userObject.restriction.level = 1;
   }*/
 
-  let 
+  let
     categorySP = quick_reply.payload.split('_'),
     categories = [],
     category = {},
@@ -42,21 +43,26 @@ module.exports = function (datastore, userObject, quick_reply) {
     notCategory = true;
     console.log("Next button", categories, mode);
   }
-  
+
   console.log(categorySP, categorySP[1], categorySP[1].toLowerCase());
   if (categorySP[1].toLowerCase() === "end") {
     console.log("sending last category message");
-    sendMessage.sendTextMessage(userObject.mId, "¡Genial! En cualquier momento comenzarás a recibir mensajes con ofertas y promociones para ti", [], function(){}, 
+    sendMessage.sendTextMessage(userObject.mId, botMessages.START_SENDING_OFFERS, [], function(){},
                                [{
-                                 "type":"postback",
-                                  "title":"Ver mis ofertas de hoy",
-                                  "payload":"TODAY_PAYLOAD"
-                               }]);
+                                 "type": "postback",
+                                  "title": botMessages.START_SENDING_OFFERS_BUTTON1,
+                                  "payload": "TODAY_PAYLOAD"
+                               },
+                              {
+                                "type": "postback",
+                                "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                                "payload": "SHARE_PAYLOAD"
+                              }]);
     return;
   }
-  
+
   category.id = parseInt(categorySP[1]);
-  
+
   if (categorySP[1].toLowerCase() === "remove") {
     mode = MODE_REMOVE;
     categories = require("../tools/compileCategories")(userObject.userData.interest, mode, userObject.userData.locale, offset);
@@ -65,19 +71,19 @@ module.exports = function (datastore, userObject, quick_reply) {
     sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir", categoriesQuickResponse);
     return;
   }
-  
+
   if (categorySP.length > 2 && parseInt(categorySP[2]) === MODE_REMOVE) {
     mode = MODE_REMOVE;
     categories = []; // we need some extra data in order to get categories
   }
-  
+
   if (typeof userObject.interest === "undefined") {
     userObject.interest = [];
   }
-  
+
   if (!notCategory && mode === MODE_ADD && userObject.interest.indexOf(category.id) >= 0) return;
   if (!notCategory && mode === MODE_REMOVE && userObject.interest.indexOf(category.id) === -1) return;
-  
+
   if (!notCategory && mode === MODE_ADD)
     userObject.interest.push(category.id);
   else if (!notCategory && mode === MODE_REMOVE) {
@@ -86,15 +92,15 @@ module.exports = function (datastore, userObject, quick_reply) {
       userObject.interest.splice(index, 1);
     }
   }
-  
+
   // Error showing categories not in interest and saving NaNs in interest. Maybe a clean function
-  
+
   console.log('Prev step', userObject);
-  
+
   let key = datastore.key(["User", parseInt(userObject.id, 10)]);
-  
+
   userObject.interest = utilities.cleanUserInterests(userObject.interest);
-  
+
   const entity = {
     key: key,
     data: toDatastore(userObject)
@@ -114,7 +120,7 @@ module.exports = function (datastore, userObject, quick_reply) {
         sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar HECHO para continuar",
                                     categoriesQuickResponse);
       else if (mode === MODE_REMOVE)
-        sendMessage.sendTextMessage(userObject.mId, "Listo, ¿alguna otra categoría que quieras quitar de tus intereses?, También puedes seleccionar HECHO si deseas terminar", 
+        sendMessage.sendTextMessage(userObject.mId, "Listo, ¿alguna otra categoría que quieras quitar de tus intereses?, También puedes seleccionar HECHO si deseas terminar",
                                     categoriesQuickResponse);
     }
   );

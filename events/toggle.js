@@ -1,6 +1,9 @@
 /**
  * Created by andre on 28/06/17.
  */
+
+let botMessages = require('../messages/bot-msgs');
+
 const
     sendMessage = require('../tools/sendMessage'),
     PAUSED = 1,
@@ -59,13 +62,23 @@ event.prototype.run = function () {
         }
 
         if (action === PAUSED)
-            sendMessage.sendTextMessage(this.userObject.mId, "Haz pausado las ofertas, no recibiras ofertas hasta que reanudes", []);
+            sendMessage.sendTextMessage(this.userObject.mId, "Se han pausado ofertas y promociones, presiona el botón debajo cuando estés listo para volver a recibirlas :D", [], function() {},
+          [{
+            "type": "postback",
+            "title": "Reanudar",
+            "payload": "RESUME_OFFERTS_PAYLOAD"
+          }]);
         else {
-            sendMessage.sendTextMessage(this.userObject.mId, "¡Genial! En cualquier momento comenzarás a recibir mensajes con ofertas y promociones para ti", [], function () {},
+            sendMessage.sendTextMessage(this.userObject.mId, botMessages.START_SENDING_OFFERS, [], function () {},
                 [{
                     "type": "postback",
-                    "title": "Ver ofertas de hoy",
+                    "title": botMessages.START_SENDING_OFFERS_BUTTON1,
                     "payload": "TODAY_PAYLOAD"
+                },
+                {
+                    "type": "postback",
+                    "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                    "payload": "SHARE_PAYLOAD"
                 }]);
         }
     });
