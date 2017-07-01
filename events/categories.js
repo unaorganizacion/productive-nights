@@ -37,8 +37,6 @@ event.prototype.run = function () {
                                       "payload": `CATEGORY_END`
                                     }], resolve);
     });
-  });
-
 };
 
 module.exports = event;
