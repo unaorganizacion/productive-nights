@@ -46,7 +46,7 @@ module.exports = function (datastore, userObject, quick_reply) {
 
   console.log(categorySP, categorySP[1], categorySP[1].toLowerCase());
   if (categorySP[1].toLowerCase() === "end") {
-    console.log("sending last category message");
+    console.log("sending last category message");    
     sendMessage.sendTextMessage(userObject.mId, botMessages.START_SENDING_OFFERS, [], function(){},
                                [{
                                  "type": "postback",
