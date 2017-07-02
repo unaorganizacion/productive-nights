@@ -22,7 +22,7 @@ event.prototype.run = function () {
     return new Promise(function (resolve) {   */
       sendMessage.sendTextMessage(
         self.userObject.mId,
-        "Seleccionar AGREGAR para seguir más categorías o QUITAR para dejar de seguirlas",
+        "Selecciona AGREGAR para seguir más categorías o QUITAR para dejar de seguirlas",
                                    [ {
                                       "content_type": "text",
                                       "title": "Agregar",
