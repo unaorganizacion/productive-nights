@@ -157,7 +157,7 @@ function receivedPostback(event, userObject) {
     events.get(userObject, payload).run();
   } catch (e) {
     console.error("Error retrieving event object.", e);
-    sendTextMessage(senderID, "DDDDDDDD: /n Disculpáme, algo anda mal pero no te preocues, ¡pronto lo solucionaremos! :D");
+    sendTextMessage(senderID, "DDDDDDDD:\u000ADisculpáme, algo anda mal pero no te preocues, ¡pronto lo solucionaremos! :D");
   }
 }
 
