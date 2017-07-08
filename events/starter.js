@@ -21,12 +21,12 @@ event.prototype.run = function () {
   .then(function () {
     return new Promise(function (resolve) {
       sendMessage.sendTextMessage(self.userObject.mId, "Por ahora solo conozco las de Chihuahua, Chihuahua. ¡Pero pronto agregaré más ciudades :D!", [], resolve);
-    }); 
+    });
   })
   /* .then(function () {
     return new Promise(function (resolve) {
       sendMessage.sendTextMessage(self.userObject.mId, "Solo por haberme agregado te voy a regalar...", [], resolve);
-    }); 
+    });
   }) */
   // todo: select random offer in the pool today-offers
   .then(function () {
@@ -38,8 +38,7 @@ event.prototype.run = function () {
   })
   .then(function () {
     console.log("Ended chain of messages");
-  })
-  ;
-}
+  });
+};
 
 module.exports = event;
