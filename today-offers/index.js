@@ -20,12 +20,11 @@ module.exports = [
     image_url: "http://messengerdemo.parseapp.com/img/touch.png",
     buttons: [{
       type: "web_url",
-      url: "https://www.oculus.com/en-us/touch/",
-      title: "Open Web URL"
+      url: "https://www.facebook.com/sharer/sharer.php?u=https%3A//goo.gl/maps/oguRzdieeyy",
+      title: "Share this con FB!"
     }, {
-      type: "postback",
-      title: "Call Postback",
-      payload: "Payload for second bubble",
+      type: "element_share",
+      title: "Share in messenger",
     }]
   }
 ];

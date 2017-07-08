@@ -105,7 +105,7 @@ app.post('/postMessage', (req, res) => {
                     "filedata": req.body.file
                 };
 
-                callSendAPI(messageData);
+                callSendAPI(messageData, true);
             }
             break;
           case 'production':
@@ -310,26 +310,39 @@ function sendGenericMessage(recipientId) {
   callSendAPI(messageData);
 }
 
-function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-    method: 'POST',
-    json: messageData
+function callSendAPI(messageData, form = false) {
+  let cb = function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+          let recipientId = body.recipient_id;
+          let messageId = body.message_id;
 
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
+          console.log("Successfully sent generic message with id %s to recipient %s",
+              messageId, recipientId);
+      } else {
+          console.error("Unable to send message.");
+          console.error(response);
+          console.error(error);
+      }
+  };
 
-      console.log("Successfully sent generic message with id %s to recipient %s",
-        messageId, recipientId);
-    } else {
-      console.error("Unable to send message.");
-      console.error(response);
-      console.error(error);
-    }
-  });
+  if (!form) {
+      request({
+          uri: 'https://graph.facebook.com/v2.6/me/messages',
+          qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+          method: 'POST',
+          json: messageData
+      }, cb);
+  } else {
+    request.post({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        headers: {
+            access_token: process.env.PAGE_ACCESS_TOKEN
+        },
+        form: messageData
+    }, cb);
+  }
+
+
 }
 
 // Set Express to listen out for HTTP requests
