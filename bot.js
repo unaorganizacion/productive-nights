@@ -99,7 +99,7 @@ app.post('/postMessage', (req, res) => {
                     "message":{
                         "attachment":{
                             "type":"file",
-                            "payload":{},
+                            "payload":"",
 
                         }
                     },
