@@ -336,9 +336,7 @@ function callSendAPI(messageData, form = false) {
   } else {
     request.post({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        headers: {
-            access_token: process.env.PAGE_ACCESS_TOKEN
-        },
+        qs: {  access_token: process.env.PAGE_ACCESS_TOKEN },
         form: messageData
     }, cb);
   }
