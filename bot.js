@@ -11,6 +11,8 @@ let messengerButton = "<html><head><title>Facebook Messenger Bot</title></head><
 const entities = require("./datastore-entities");
 // todo: fix this you lazy bastard!
 const events = require("./events")(entities.datastore);
+const categories = require('./categories');
+const psswrd = '6CEF5D2255D269D01C6A211730A8B45885ED144325AA0198161BBFDD96D8086E';
 
 
 // The rest of the code implements the routes for our Express server.
@@ -20,6 +22,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8100");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Boteru-Password-Oytupw94nih");
+    //intercepts OPTIONS method
+    if ('OPTIONS' === req.method) {
+        //respond with 200
+        res.sendStatus(200);
+    }
+    else {
+        //move on
+        next();
+    }
+});
+
+app.options("/*", function(req, res, next){
+  if (req.header('X-Boteru-Password-Oytupw94nih') === psswrd) {
+      res.header('Access-Control-Allow-Origin', '*');
+  } else {
+      res.header('Access-Control-Allow-Origin', '*');
+  }
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, X-Boteru-Password-Oytupw94nih');
+  res.send(200);
+});
 
 // Webhook validation
 app.get('/webhook', function(req, res) {
@@ -37,6 +63,66 @@ app.get('/webhook', function(req, res) {
 app.get('/', function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
   res.write(messengerButton);
+  res.end();
+});
+
+app.get('/categories', function (req, res) {
+  // todo: put restriction through header-key
+    res.writeHead(200, {
+      'Content-Type': 'application/json'
+    });
+    res.write(JSON.stringify(categories));
+    res.end();
+});
+
+app.post('/postMessage', (req, res) => {
+    console.log(req.body);
+  let password = req.header('X-Boteru-Password-Oytupw94nih');
+
+  if (password === psswrd) {
+      res.writeHead(200, {
+          'Content-Type': 'application/json',
+      });
+
+      if (typeof req.body.env !== 'undefined' && req.body.env.length !== null && req.body.env.length > 0) {
+        switch (req.body.env) {
+          case 'test':
+            if (req.body.text) {
+              sendTextMessage(1286379258123767, req.body.text);
+            } else if (req.body.file) {
+              const fs = require('fs');
+                let messageData = {
+                    recipient: {
+                        id: 1286379258123767
+                    },
+                    "message":{
+                        "attachment":{
+                            "type":"file",
+                            "payload":{},
+
+                        }
+                    },
+                    "filedata": req.body.file
+                };
+
+                callSendAPI(messageData);
+            }
+            break;
+          case 'production':
+            // propagateMessage(req.body);
+            break;
+        }
+      }
+
+      res.write(JSON.stringify({
+          'status': 'OK'
+      }));
+  } else {
+    res.writeHead(404, {
+        'Access-Control-Allow-Origin': 'http://localhost:8101',
+        'Content-Type': 'application/json'
+    });
+  }
   res.end();
 });
 
