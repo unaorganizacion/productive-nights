@@ -18,9 +18,10 @@ const psswrd = '6CEF5D2255D269D01C6A211730A8B45885ED144325AA0198161BBFDD96D8086E
 // The rest of the code implements the routes for our Express server.
 let app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
+    limit: '50mb'
 }));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
