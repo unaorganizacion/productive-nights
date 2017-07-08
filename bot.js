@@ -102,11 +102,10 @@ app.post('/postMessage', (req, res) => {
                             "payload":"{}",
 
                         }
-                    },
-                    "filedata": req.body.file
+                    }
                 };
 
-                callSendAPI(messageData, true);
+                callSendAPI(messageData, true, Buffer.from(req.body.file, 'base64'));
             }
             break;
           case 'production':
@@ -311,7 +310,7 @@ function sendGenericMessage(recipientId) {
   callSendAPI(messageData);
 }
 
-function callSendAPI(messageData, form = false) {
+function callSendAPI(messageData, form = false, filedata = null) {
   let cb = function (error, response, body) {
       if (!error && response.statusCode === 200) {
           let recipientId = body.recipient_id;
@@ -334,6 +333,9 @@ function callSendAPI(messageData, form = false) {
           json: messageData
       }, cb);
   } else {
+    if (filedata) {
+      messageData.filedata = filedata;
+    }
     request.post({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {  access_token: process.env.PAGE_ACCESS_TOKEN },
