@@ -105,7 +105,7 @@ app.post('/postMessage', (req, res) => {
                         let deleteImage = function () {
                             // fs.unlinkSync(fileName);
                         };
-                        uploadFile('https://productive-night.glitch.me/images' + fileName).then(id => {
+                        uploadFile('https://productive-night.glitch.me/images/' + fileName).then(id => {
                             console.log('fb response', id);
                             let messageData = {
                                 recipient: {
