@@ -8,7 +8,7 @@ function fromDatastore (obj) {
 module.exports = function (datastore) {
     return new Promise((resolve, reject) => {
         let today = moment().format('YYYY-MM-DD');
-        let query = datastore.createQuery("Post").filter('sentDate','=', new Date(today));
+        let query = datastore.createQuery("Post").filter('sentDate','=>', new Date(today));
 
         query.run(function(err, entities) {
             if (err) {
@@ -16,7 +16,7 @@ module.exports = function (datastore) {
                 console.error("Error transation",err);
                 return reject();
             } else if (entities.length < 1) {
-                //console.error("entities length less than 1", entities);
+                console.error("today offers query did not throwed results", entities);
                 return reject();
             }
             // Transaction committed successfully.
