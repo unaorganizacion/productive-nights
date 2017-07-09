@@ -112,8 +112,7 @@ app.post('/postMessage', (req, res) => {
                                                 url: req.body.locationURL,
                                                 title: "Ver ubicación"
                                             }, {
-                                                type: "element_share",
-                                                title: "Compartir anuncio"
+                                                type: "element_share"
                                             }],
                                         }]
                                     }
