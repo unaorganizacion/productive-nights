@@ -103,8 +103,7 @@ app.post('/postMessage', (req, res) => {
                                     payload: {
                                         template_type: "generic",
                                         elements: [{
-                                            title: "Oferta",
-                                            subtitle: req.body.text || "",
+                                            title: req.body.text || "Oferta",
                                             item_url: req.body.file,
                                             image_url: req.body.file,
                                             buttons: [{
