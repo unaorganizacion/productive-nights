@@ -91,7 +91,8 @@ app.post('/postMessage', (req, res) => {
             switch (req.body.env) {
                 case 'test':
                     if (req.body.text && !req.body.file) {
-                        sendTextMessage(1286379258123767, req.body.text);
+                        // todo: change true to false for production
+                        sendTextMessage(1286379258123767, req.body.text, true, req.body.categories);
                     } else if (req.body.file) {
                         let messageData = {
                             recipient: {
@@ -122,7 +123,7 @@ app.post('/postMessage', (req, res) => {
                         for (let user of users) {
                             messageData.recipient.id = user;
                             // todo: change true to false for production
-                            callSendAPI(messageData, false, null, true);
+                            callSendAPI(messageData, true, req.body.categories);
                         }
                     }
                     break;
@@ -269,7 +270,7 @@ function receivedPostback(event, userObject) {
 //////////////////////////
 // Sending helpers
 //////////////////////////
-function sendTextMessage(recipientId, messageText) {
+function sendTextMessage(recipientId, messageText, save, categories) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -279,7 +280,7 @@ function sendTextMessage(recipientId, messageText) {
         }
     };
 
-    callSendAPI(messageData);
+    callSendAPI(messageData, save, categories);
 }
 
 function sendGenericMessage(recipientId) {
@@ -359,7 +360,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, form = false, filedata = null, save = true) {
+function callSendAPI(messageData, save = true, categories) {
     let cb = function (error, response, body) {
         if (!error && response.statusCode === 200) {
             let recipientId = body.recipient_id;
@@ -417,7 +418,8 @@ function callSendAPI(messageData, form = false, filedata = null, save = true) {
         )) {
         let data = {
             sentDate: new Date(),
-            messageData: messageData.message.attachment.payload.elements[0]
+            messageData: messageData.message.attachment.payload.elements[0],
+            categories: categories
         };
         let datastore = entities.datastore;
 
