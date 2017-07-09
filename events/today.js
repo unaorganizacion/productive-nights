@@ -15,6 +15,7 @@ event.prototype.setDatastore = function (datastore) {
 event.prototype.run = function () {
   //console.log("sending today event to", this.userObject.mId, this.datastore);
     todayOffers(this.datastore).then(posts => {
+        console.log('Today offers posts', posts);
         sendMessage.sendObjectMessage(this.userObject.mId, {
             attachment: {
                 type: "template",
