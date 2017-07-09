@@ -24,6 +24,8 @@ event.prototype.run = function () {
                 }
             }
         });
+    }, () => {
+        sendMessage.sendTextMessage(this.userObject.mId, 'No hay ofertas de hoy :) intenta más tarde.');
     });
 };
 
