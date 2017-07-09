@@ -92,6 +92,15 @@ app.post('/postMessage', (req, res) => {
               sendTextMessage(1286379258123767, req.body.text);
             } else if (req.body.file) {
               const fs = require('fs');
+              const regex = /^data:.+\/(.+);base64,(.*)$/;
+
+              let matches = string.match(regex);
+              let ext = matches[1];
+              let data = matches[2];
+              let buffer = new Buffer(data, 'base64');
+              const fileName = 'file.' + ext;
+              fs.writeFileSync(fileName, buffer);
+              uploadFile('https://productive-night.glitch.me/' + fileName).then(id => {
                 let messageData = {
                     recipient: {
                         id: 1286379258123767
@@ -99,13 +108,13 @@ app.post('/postMessage', (req, res) => {
                     "message":{
                         "attachment":{
                             "type":"file",
-                            "payload":"{}",
-
+                            "payload": id,
                         }
                     }
                 };
 
                 callSendAPI(messageData, true, Buffer.from(req.body.file, 'base64'));
+              });
             }
             break;
           case 'production':
@@ -308,6 +317,10 @@ function sendGenericMessage(recipientId) {
   };
 
   callSendAPI(messageData);
+}
+
+function uploadFile () {
+
 }
 
 function callSendAPI(messageData, form = false, filedata = null) {
