@@ -115,7 +115,7 @@ app.post('/postMessage', (req, res) => {
                                     },
                                     "message": {
                                         "attachment": {
-                                            "type": "file",
+                                            "type": "image",
                                             "payload": id,
                                         }
                                     }
