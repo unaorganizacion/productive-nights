@@ -105,7 +105,7 @@ app.post('/postMessage', (req, res) => {
                                         elements: [{
                                             title: "Oferta",
                                             subtitle: req.body.text || "",
-                                            //item_url: req.body.file,
+                                            item_url: req.body.file,
                                             image_url: req.body.file,
                                             buttons: [{
                                                 type: "web_url",
