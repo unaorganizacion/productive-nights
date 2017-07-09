@@ -49,6 +49,8 @@ app.options("/*", function (req, res, next) {
     res.send(200);
 });
 
+app.use('/images', express.static('images'));
+
 // Webhook validation
 app.get('/webhook', function (req, res) {
     if (req.query['hub.mode'] === 'subscribe' &&
@@ -99,11 +101,11 @@ app.post('/postMessage', (req, res) => {
                         let data = matches[2];
                         let buffer = new Buffer(data, 'base64');
                         const fileName = 'file.' + ext;
-                        fs.writeFileSync(fileName, buffer);
+                        fs.writeFileSync('images/' + fileName, buffer);
                         let deleteImage = function () {
-                            fs.unlinkSync(fileName);
+                            // fs.unlinkSync(fileName);
                         };
-                        uploadFile('https://productive-night.glitch.me/' + fileName).then(id => {
+                        uploadFile('https://productive-night.glitch.me/images' + fileName).then(id => {
                             console.log('fb response', id);
                             let messageData = {
                                 recipient: {
