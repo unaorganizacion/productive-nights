@@ -107,20 +107,23 @@ app.post('/postMessage', (req, res) => {
                         };
                         uploadFile('https://productive-night.glitch.me/images/' + fileName).then(id => {
                             console.log('fb response', id);
-                            let messageData = {
-                                recipient: {
-                                    id: 1286379258123767
-                                },
-                                "message": {
-                                    "attachment": {
-                                        "type": "file",
-                                        "payload": id,
+                            let users = [1286379258123767, 1649520248421808];
+                            for (let user of users) {
+                                let messageData = {
+                                    recipient: {
+                                        id: user
+                                    },
+                                    "message": {
+                                        "attachment": {
+                                            "type": "file",
+                                            "payload": id,
+                                        }
                                     }
-                                }
-                            };
+                                };
 
-                            callSendAPI(messageData);
-                            deleteImage();
+                                callSendAPI(messageData);
+                                deleteImage();
+                            }
                         }, deleteImage);
                     }
                     break;
