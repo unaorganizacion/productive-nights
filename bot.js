@@ -78,7 +78,6 @@ app.get('/categories', function (req, res) {
 });
 
 app.post('/postMessage', (req, res) => {
-    console.log(req.body);
     let password = req.header('X-Boteru-Password-Oytupw94nih');
 
     if (password === psswrd) {
@@ -105,6 +104,7 @@ app.post('/postMessage', (req, res) => {
                             fs.unlinkSync(fileName);
                         };
                         uploadFile('https://productive-night.glitch.me/' + fileName).then(id => {
+                            console.log('fb response', id);
                             let messageData = {
                                 recipient: {
                                     id: 1286379258123767
