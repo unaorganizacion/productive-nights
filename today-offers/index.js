@@ -1,11 +1,11 @@
 const moment = require('moment');
 
-function fromDatastore (obj) {
-    obj.id = obj[datastore.KEY].id;
-    return obj;
-}
-
 module.exports = function (datastore) {
+    function fromDatastore (obj) {
+        obj.id = obj[datastore.KEY].id;
+        return obj;
+    }
+
     return new Promise((resolve, reject) => {
         let today = moment().format('YYYY-MM-DD');
         let query = datastore.createQuery("Post").filter('sentDate','>=', new Date(today));
