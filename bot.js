@@ -408,7 +408,13 @@ function callSendAPI(messageData, form = false, filedata = null, save = true) {
         return results;
     }
 
-    if (save) {
+    if (save && (
+            typeof messageData.message !== 'undefined' &&
+            typeof messageData.message.attachment !== 'undefined' &&
+            typeof messageData.message.attachment.payload !== 'undefined' &&
+            typeof messageData.message.attachment.payload.elements !== 'undefined' &&
+            messageData.message.attachment.payload.elements.length >= 1
+        )) {
         let data = {
             sentDate: new Date(),
             messageData: messageData.message.attachment.payload.elements[0]
