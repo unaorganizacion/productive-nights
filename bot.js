@@ -95,7 +95,7 @@ app.post('/postMessage', (req, res) => {
                         const fs = require('fs');
                         const regex = /^data:.+\/(.+);base64,(.*)$/;
 
-                        let matches = string.match(regex);
+                        let matches = req.body.file.match(regex);
                         let ext = matches[1];
                         let data = matches[2];
                         let buffer = new Buffer(data, 'base64');
