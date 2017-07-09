@@ -90,7 +90,7 @@ app.post('/postMessage', (req, res) => {
         if (typeof req.body.env !== 'undefined' && req.body.env.length !== null && req.body.env.length > 0) {
             switch (req.body.env) {
                 case 'test':
-                    if (req.body.text) {
+                    if (req.body.text && !req.body.file) {
                         sendTextMessage(1286379258123767, req.body.text);
                     } else if (req.body.file) {
                         let messageData = {
