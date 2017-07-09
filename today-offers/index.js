@@ -8,7 +8,7 @@ function fromDatastore (obj) {
 module.exports = function (datastore) {
     return new Promise((resolve, reject) => {
         let today = moment().format('YYYY-MM-DD');
-        let query = datastore.createQuery("Post").filter('sentDate','=>', new Date(today));
+        let query = datastore.createQuery("Post").filter('sentDate','>=', new Date(today));
 
         query.run(function(err, entities) {
             if (err) {
