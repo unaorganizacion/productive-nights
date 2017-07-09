@@ -119,7 +119,7 @@ app.post('/postMessage', (req, res) => {
                                 }
                             };
 
-                            callSendAPI(messageData, true, Buffer.from(req.body.file, 'base64'));
+                            callSendAPI(messageData);
                             deleteImage();
                         }, deleteImage);
                     }
