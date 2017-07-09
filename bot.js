@@ -374,24 +374,12 @@ function callSendAPI(messageData, save = true, categories) {
             console.error(error);
         }
     };
-
-    if (!form) {
-        request({
-            uri: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-            method: 'POST',
-            json: messageData
-        }, cb);
-    } else {
-        if (filedata) {
-            messageData.filedata = filedata;
-        }
-        request.post({
-            url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-            form: messageData
-        }, cb);
-    }
+    request({
+        uri: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'POST',
+        json: messageData
+    }, cb);
 
     function toDatastore(obj, nonIndexed) {
         nonIndexed = nonIndexed || [];
