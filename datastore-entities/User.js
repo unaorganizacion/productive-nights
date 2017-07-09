@@ -105,7 +105,6 @@ module.exports = function (datastore) {
             }
             // Transaction committed successfully.
             entities.map(fromDatastore);
-            console.log("entities", entities[0]);
             resolve(entities[0]);
           });
       });

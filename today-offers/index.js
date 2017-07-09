@@ -1,4 +1,33 @@
-module.exports = [
+const moment = require('moment');
+
+function fromDatastore (obj) {
+    obj.id = obj[datastore.KEY].id;
+    return obj;
+}
+
+module.exports = function (datastore) {
+    return new Promise((resolve, reject) => {
+        let today = moment().format('YYYY-MM-DD');
+        let query = datastore.createQuery("Post").filter('sentDate','=', new Date(today));
+
+        query.run(function(err, entities) {
+            if (err) {
+                // Error handling omitted.
+                console.error("Error transation",err);
+                return reject();
+            } else if (entities.length < 1) {
+                //console.error("entities length less than 1", entities);
+                return reject();
+            }
+            // Transaction committed successfully.
+            entities.map(fromDatastore);
+
+            resolve(entities);
+        });
+    });
+};
+
+/*[
     {
         title: "Carlin's gay",
         subtitle: "Next-generation virtual reality",
@@ -26,4 +55,4 @@ module.exports = [
             type: "element_share",
         }]
     }
-];
+];*/

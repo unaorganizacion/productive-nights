@@ -19,11 +19,12 @@
   "license": "MIT",
   "homepage": "https://developers.facebook.com/docs/messenger-platform/guides/quick-start",
   "dependencies": {
-    "request": "^2.72.0",
-    "express": "*",
-    "body-parser": "*",
     "@google-cloud/datastore": "^1.0.2",
     "bluebird": "^3.5.0",
+    "body-parser": "*",
+    "express": "*",
+    "moment": "^2.18.1",
+    "request": "^2.72.0",
     "request-promise": "^4.2.1"
   },
   "devDependencies": {

@@ -93,38 +93,38 @@ app.post('/postMessage', (req, res) => {
                     if (req.body.text) {
                         sendTextMessage(1286379258123767, req.body.text);
                     } else if (req.body.file) {
-                        const fs = require('fs');
-                        const regex = /^data:.+\/(.+);base64,(.*)$/;
-
-                        let matches = req.body.file.match(regex);
-                        let ext = matches[1];
-                        let data = matches[2];
-                        let buffer = new Buffer(data, 'base64');
-                        const fileName = 'file.' + ext;
-                        fs.writeFileSync('images/' + fileName, buffer);
-                        let deleteImage = function () {
-                            // fs.unlinkSync(fileName);
-                        };
-                        uploadFile('https://productive-night.glitch.me/images/' + fileName).then(id => {
-                            console.log('fb response', id);
-                            let users = [1286379258123767, 1649520248421808];
-                            for (let user of users) {
-                                let messageData = {
-                                    recipient: {
-                                        id: user
-                                    },
-                                    "message": {
-                                        "attachment": {
-                                            "type": "image",
-                                            "payload": id,
-                                        }
+                        let messageData = {
+                            recipient: {
+                                id: null
+                            },
+                            message: {
+                                attachment: {
+                                    type: "template",
+                                    payload: {
+                                        template_type: "generic",
+                                        elements: [{
+                                            title: "Oferta",
+                                            subtitle: req.body.text || "",
+                                            item_url: req.body.locationURL,
+                                            image_url: req.body.file,
+                                            buttons: [{
+                                                type: "web_url",
+                                                url: req.body.locationURL,
+                                                title: "Ver ubicación"
+                                            }, {
+                                                type: "element_share",
+                                                title: "Compartir anuncio"
+                                            }],
+                                        }]
                                     }
-                                };
-
-                                callSendAPI(messageData);
-                                deleteImage();
+                                }
                             }
-                        }, deleteImage);
+                        };
+                        let users = [1286379258123767, 1649520248421808];
+                        for (let user of users) {
+                            messageData.recipient.id = user;
+                            callSendAPI(messageData, false, null, false);
+                        }
                     }
                     break;
                 case 'production':
@@ -360,7 +360,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, form = false, filedata = null) {
+function callSendAPI(messageData, form = false, filedata = null, save = true) {
     let cb = function (error, response, body) {
         if (!error && response.statusCode === 200) {
             let recipientId = body.recipient_id;
@@ -393,7 +393,40 @@ function callSendAPI(messageData, form = false, filedata = null) {
         }, cb);
     }
 
+    function toDatastore(obj, nonIndexed) {
+        nonIndexed = nonIndexed || [];
+        const results = [];
+        Object.keys(obj).forEach((k) => {
+            if (obj[k] === undefined) {
+                return;
+            }
+            results.push({
+                name: k,
+                value: obj[k],
+                excludeFromIndexes: nonIndexed.indexOf(k) !== -1
+            });
+        });
+        return results;
+    }
 
+    if (save) {
+        let data = {
+            sentDate: new Date(),
+            messageData: messageData.message.attachment.payload.elements[0]
+        };
+        let datastore = entities.datastore;
+
+        let entity = {
+            key: datastore.key("Post"),
+            data: toDatastore(data)
+        };
+
+        datastore.save(entity, function (err) {
+            if (err) {
+                console.error("could not save post", err);
+            }
+        });
+    }
 }
 
 // Set Express to listen out for HTTP requests
