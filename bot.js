@@ -109,7 +109,7 @@ app.post('/postMessage', (req, res) => {
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
-                                                title: "Ver ubicación"
+                                                title: "Ubicación"
                                             }, {
                                                 type: "element_share"
                                             }],
@@ -121,12 +121,13 @@ app.post('/postMessage', (req, res) => {
                         let users = [1286379258123767, 1649520248421808];
                         for (let user of users) {
                             messageData.recipient.id = user;
-                            callSendAPI(messageData, false, null, false);
+                            // todo: change true to false for production
+                            callSendAPI(messageData, false, null, true);
                         }
                     }
                     break;
                 case 'production':
-                    // propagateMessage(req.body);
+
                     break;
             }
         }
