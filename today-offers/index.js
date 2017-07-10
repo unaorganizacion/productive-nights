@@ -38,20 +38,15 @@ module.exports = function (datastore, userObject) {
                     .filter('category', category)
                     //.filter('sentDate','>=', new Date(today))
                 ;
-                query.runStream()
-                    .on('error', err => {
+                query.run((err, entities, info) => {
+                    if (err) {
                         console.error("Error transation",err);
                         // probably no results
                         cb();
-                    })
-                    .on('info', info => {
-                        //console.log('getting posts today offers info', info)
-                    })
-                    .on('end', (a,b,c) => {
-                        console.log('query end', a,b,c);
-                        cb()
-                    })
-                    .on('data', entity => {
+                        return;
+                    }
+
+                    for (let entity of entities) {
                         console.log('entity from cat', category, entity);
                         let post = fromDatastore(entity);
                         if (entity.sentDate >= today &&
@@ -62,7 +57,8 @@ module.exports = function (datastore, userObject) {
                         } else {
                             console.log('dup or not in range');
                         }
-                    })
+                    }
+                })
             }
         }
 

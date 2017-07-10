@@ -9,13 +9,13 @@ const entities = require("./datastore-entities");
 const datastore = entities.datastore;
 
 let
-    today = moment().format('YYYY-MM-DD'),
+    today = moment().utc().startOf('day').toDate(),
     posts = []
 ;
 
 let query = datastore.createQuery("Post")
     .filter('categories', '=', 0)
-    .filter('sentDate','>=', new Date(today))
+    //.filter('sentDate','>=', today)
 ;
 query.run((err, entities, info) => {
     console.log(err, entities, info)
