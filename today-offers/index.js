@@ -47,9 +47,12 @@ module.exports = function (datastore, userObject) {
                         cb()
                     })
                     .on('data', entity => {
+                        console.log('entity from cat', category, entity);
                         let post = fromDatastore(entity);
                         if (!checkDup(post)) {
                             posts.push(post);
+                        } else {
+                            console.log('dup');
                         }
                     })
             }
