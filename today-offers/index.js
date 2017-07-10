@@ -13,7 +13,7 @@ module.exports = function (datastore, userObject) {
     function fromDatastore (obj) {
         // let newObj = obj.messageData;
         // newObj.id = obj[datastore.KEY].id;
-        return newObj;
+        return obj;
     }
 
     return new Promise((resolve, reject) => {
