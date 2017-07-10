@@ -19,6 +19,7 @@ module.exports = function (datastore, userObject) {
     return new Promise((resolve, reject) => {
         let
             today = moment().format('YYYY-MM-DD'),
+            tomorrow = moment.add('1', 'day').toDate(),
             posts = []
         ;
 
@@ -34,8 +35,8 @@ module.exports = function (datastore, userObject) {
             return function (cb) {
                 console.log('querying for', category);
                 let query = datastore.createQuery("Post")
-                    .filter('sentDate','>=', new Date(today))
-                    .filter('category', '=', category)
+                    .filter('category', category)
+                    //.filter('sentDate','>=', new Date(today))
                 ;
                 query.runStream()
                     .on('error', err => {
@@ -52,7 +53,10 @@ module.exports = function (datastore, userObject) {
                     .on('data', entity => {
                         console.log('entity from cat', category, entity);
                         let post = fromDatastore(entity);
-                        if (!checkDup(post)) {
+                        if (entity.sentDate >= today &&
+                            entity.sentDate < tomorrow &&
+                            !checkDup(post))
+                        {
                             posts.push(post);
                         } else {
                             console.log('dup');
