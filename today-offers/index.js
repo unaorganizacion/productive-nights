@@ -13,7 +13,7 @@ module.exports = function (datastore, userObject) {
             .filter('sentDate','>=', new Date(today))
         ;
 
-        for (let category of userObject.interests) {
+        for (let category of userObject.interest) {
             query.filter('category', '=', category);
         }
 

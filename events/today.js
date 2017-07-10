@@ -25,7 +25,8 @@ event.prototype.run = function () {
                 }
             }
         });
-    }, () => {
+    }, (e) => {
+        console.error('No today offers error', e);
         sendMessage.sendTextMessage(this.userObject.mId, 'No hay ofertas de hoy :) intenta más tarde.');
     });
 };

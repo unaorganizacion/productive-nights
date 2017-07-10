@@ -58,7 +58,7 @@ module.exports = function (datastore) {
             var data = {
               mId: id,
               userData: userData,
-              interests: [],
+              interest: [],
               restriction: {
                 level: 0,
               }
