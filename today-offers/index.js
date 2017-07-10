@@ -46,8 +46,8 @@ module.exports = function (datastore, userObject) {
                         return;
                     }
 
+                    console.log('entity from cat', category, entities);
                     for (let entity of entities) {
-                        console.log('entity from cat', category, entity);
                         let post = fromDatastore(entity);
                         if (entity.sentDate >= today &&
                             entity.sentDate < tomorrow &&
@@ -58,6 +58,7 @@ module.exports = function (datastore, userObject) {
                             console.log('dup or not in range');
                         }
                     }
+                    cb();
                 })
             }
         }
