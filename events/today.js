@@ -14,17 +14,19 @@ event.prototype.setDatastore = function (datastore) {
 
 event.prototype.run = function () {
   //console.log("sending today event to", this.userObject.mId, this.datastore);
-    todayOffers(this.datastore, this.userObject).then(posts => {
-        console.log('Today offers posts', posts);
-        sendMessage.sendObjectMessage(this.userObject.mId, {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "generic",
-                    elements: posts
+    todayOffers(this.datastore, this.userObject).then(postsElements => {
+        console.log('Today offers posts', postsElements);
+        for (let posts of postsElements) {
+            sendMessage.sendObjectMessage(this.userObject.mId, {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "generic",
+                        elements: posts
+                    }
                 }
-            }
-        });
+            });
+        }
     }, (e) => {
         console.error('No today offers error', e);
         sendMessage.sendTextMessage(this.userObject.mId, 'No hay ofertas de hoy :) intenta más tarde.');

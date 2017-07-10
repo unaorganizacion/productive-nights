@@ -71,6 +71,25 @@ module.exports = function (datastore, userObject) {
 
         waterfall(functions, (err, result) => {
             if (posts.length > 0) {
+                let postsElements = [];
+                if (posts.length > 10) {
+                    let
+                        page = 0,
+                        elementsProcessed = 0
+                    ;
+                    postsElements.push([]);
+                    for (let postToElement of posts) {
+                        postsElements[page].push(postToElement);
+                        elementsProcessed++;
+                        if (elementsProcessed >= 10){
+                            page++;
+                            elementsProcessed = 0;
+                            postsElements.push([]);
+                        }
+                    }
+                } else {
+                    postsElements.push([posts]);
+                }
                 resolve(posts);
             } else {
                 if (err) {
