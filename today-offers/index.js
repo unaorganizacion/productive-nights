@@ -81,16 +81,17 @@ module.exports = function (datastore, userObject) {
                     for (let postToElement of posts) {
                         postsElements[page].push(postToElement);
                         elementsProcessed++;
-                        if (elementsProcessed >= 10){
+                        if (elementsProcessed >= 9){
                             page++;
                             elementsProcessed = 0;
                             postsElements.push([]);
                         }
                     }
                 } else {
-                    postsElements.push([posts]);
+                    postsElements.push([]);
+                    postsElements[0].push(posts);
                 }
-                resolve(posts);
+                resolve(postsElements);
             } else {
                 if (err) {
                     console.error(err);
