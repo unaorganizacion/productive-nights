@@ -16,7 +16,7 @@ function callSendAPI(messageData, cb = function(){}) {
         messageId, recipientId);
       cb();
     } else {
-      console.error("Unable to send message.", error);
+      console.error("Unable to send message.", response);
       //console.error(response);
       //console.error(error);
       cb();
