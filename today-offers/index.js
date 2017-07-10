@@ -1,14 +1,21 @@
 const moment = require('moment');
 
-module.exports = function (datastore) {
+module.exports = function (datastore, userObject) {
     function fromDatastore (obj) {
-        obj.id = obj[datastore.KEY].id;
-        return obj;
+        let newObj = obj.messageData;
+        newObj.id = obj[datastore.KEY].id;
+        return newObj;
     }
 
     return new Promise((resolve, reject) => {
         let today = moment().format('YYYY-MM-DD');
-        let query = datastore.createQuery("Post").filter('sentDate','>=', new Date(today));
+        let query = datastore.createQuery("Post")
+            .filter('sentDate','>=', new Date(today))
+        ;
+
+        for (let category of userObject.interests) {
+            query.filter('category', '=', category);
+        }
 
         query.run(function(err, entities) {
             if (err) {
