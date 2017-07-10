@@ -40,6 +40,8 @@ module.exports = function (datastore, userObject) {
                 query.runStream()
                     .on('error', err => {
                         console.error("Error transation",err);
+                        // probably no results
+                        cb();
                     })
                     .on('info', info => {
                         console.log('getting posts today offers info', info)
