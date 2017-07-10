@@ -1,5 +1,14 @@
-const moment = require('moment');
+const
+    moment = require('moment'),
+    waterfall = require("async/waterfall")
+;
 
+/**
+ * Another option would be to get all the today offers and compare based on the user's categories
+ * @param datastore
+ * @param userObject
+ * @returns {Promise}
+ */
 module.exports = function (datastore, userObject) {
     function fromDatastore (obj) {
         let newObj = obj.messageData;
@@ -8,28 +17,59 @@ module.exports = function (datastore, userObject) {
     }
 
     return new Promise((resolve, reject) => {
-        let today = moment().format('YYYY-MM-DD');
-        let query = datastore.createQuery("Post")
-            .filter('sentDate','>=', new Date(today))
+        let
+            today = moment().format('YYYY-MM-DD'),
+            posts = []
         ;
 
-        for (let category of userObject.interest) {
-            query.filter('category', '=', category);
+        function checkDup (postEntity) {
+            let dup = false;
+            for (let post of posts) {
+                if (post.id === postEntity.id) dup = true;
+            }
+            return dup;
         }
 
-        query.run(function(err, entities) {
-            if (err) {
-                // Error handling omitted.
-                console.error("Error transation",err);
-                return reject();
-            } else if (entities.length < 1) {
-                console.error("today offers query did not throwed results", entities);
-                return reject();
+        function createWaterfallFunction (category) {
+            return function (cb) {
+                let query = datastore.createQuery("Post")
+                    .filter('sentDate','>=', new Date(today))
+                    .filter('category', '=', category)
+                ;
+                query.runStream()
+                    .on('error', err => {
+                        console.error("Error transation",err);
+                    })
+                    .on('info', info => {
+                        console.log('getting posts today offers info', info)
+                    })
+                    .on('end', () => {
+                        cb()
+                    })
+                    .on('data', entity => {
+                        let post = fromDatastore(entity);
+                        if (!checkDup(post)) {
+                            posts.push(post);
+                        }
+                    })
             }
-            // Transaction committed successfully.
-            entities.map(fromDatastore);
+        }
 
-            resolve(entities);
+        let functions = [];
+        for (let category of userObject.interest) {
+            createWaterfallFunction(category);
+        }
+
+        waterfall(functions, (err, result) => {
+            if (posts.length > 0) {
+                resolve(posts);
+            } else {
+                if (err) {
+                    console.error(err);
+                } else
+                    console.error("today offers query did not throwed results", entities);
+                reject();
+            }
         });
     });
 };
