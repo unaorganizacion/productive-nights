@@ -45,9 +45,10 @@ module.exports = function (datastore, userObject) {
                         cb();
                     })
                     .on('info', info => {
-                        console.log('getting posts today offers info', info)
+                        //console.log('getting posts today offers info', info)
                     })
-                    .on('end', () => {
+                    .on('end', (a,b,c) => {
+                        console.log('query end', a,b,c);
                         cb()
                     })
                     .on('data', entity => {
