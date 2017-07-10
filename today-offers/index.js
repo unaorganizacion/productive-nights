@@ -19,7 +19,7 @@ module.exports = function (datastore, userObject) {
     return new Promise((resolve, reject) => {
         let
             today = moment().format('YYYY-MM-DD'),
-            tomorrow = moment.add('1', 'day').toDate(),
+            tomorrow = moment().add(1, 'days').toDate(),
             posts = []
         ;
 
