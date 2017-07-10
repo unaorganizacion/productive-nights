@@ -25,7 +25,6 @@ module.exports = function (datastore, userObject) {
 
         function checkDup (postEntity) {
             let dup = false;
-            console.log('checkDup', posts);
             for (let post of posts) {
                 if (post.id === postEntity.id) dup = true;
             }
@@ -53,8 +52,6 @@ module.exports = function (datastore, userObject) {
                         let entitySentDate = moment(entity.sentDate);
                         console.log(entitySentDate.format('YYYY-MM-DD'));
                         if (!checkDup(post)) {
-                            console.log(post);
-                            delete post.id;
                             posts.push(post);
                         } else {
                             console.log('dup or not in range', entitySentDate.isSame(today, 'd'), !checkDup(post));
@@ -74,24 +71,20 @@ module.exports = function (datastore, userObject) {
         waterfall(functions, (err, result) => {
             if (posts.length > 0) {
                 let postsElements = [];
-                if (posts.length > 10) {
-                    let
-                        page = 0,
-                        elementsProcessed = 0
-                    ;
-                    postsElements.push([]);
-                    for (let postToElement of posts) {
-                        postsElements[page].push(postToElement);
-                        elementsProcessed++;
-                        if (elementsProcessed >= 10) {
-                            page++;
-                            elementsProcessed = 0;
-                            postsElements.push([]);
-                        }
+                let
+                    page = 0,
+                    elementsProcessed = 0
+                ;
+                postsElements.push([]);
+                for (let postToElement of posts) {
+                    delete postToElement.id;
+                    postsElements[page].push(postToElement);
+                    elementsProcessed++;
+                    if (elementsProcessed >= 10) {
+                        page++;
+                        elementsProcessed = 0;
+                        postsElements.push([]);
                     }
-                } else {
-                    postsElements.push([]);
-                    postsElements[0].push(posts);
                 }
                 resolve(postsElements);
             } else {
