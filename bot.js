@@ -92,7 +92,7 @@ app.post('/postMessage', (req, res) => {
                 case 'test':
                     if (req.body.text && !req.body.file) {
                         // todo: change true to false for production
-                        sendTextMessage(1286379258123767, req.body.text, true, req.body.categories);
+                        sendTextMessage(1286379258123767, req.body.text, true, req.body.categories, req.body.locationURL);
                     } else if (req.body.file) {
                         let messageData = {
                             recipient: {
@@ -270,7 +270,7 @@ function receivedPostback(event, userObject) {
 //////////////////////////
 // Sending helpers
 //////////////////////////
-function sendTextMessage(recipientId, messageText, save, categories) {
+function sendTextMessage(recipientId, messageText, save, categories, location) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -280,7 +280,7 @@ function sendTextMessage(recipientId, messageText, save, categories) {
         }
     };
 
-    callSendAPI(messageData, save, categories);
+    callSendAPI(messageData, save, categories, location);
 }
 
 function sendGenericMessage(recipientId) {
@@ -360,7 +360,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, save = true, categories) {
+function callSendAPI(messageData, save = true, categories = [], location = null) {
     let cb = function (error, response, body) {
         if (!error && response.statusCode === 200) {
             let recipientId = body.recipient_id;
@@ -398,17 +398,37 @@ function callSendAPI(messageData, save = true, categories) {
     }
 
     if (save && (
-            typeof messageData.message !== 'undefined' &&
-            typeof messageData.message.attachment !== 'undefined' &&
-            typeof messageData.message.attachment.payload !== 'undefined' &&
-            typeof messageData.message.attachment.payload.elements !== 'undefined' &&
-            messageData.message.attachment.payload.elements.length >= 1
+            (
+                typeof messageData.message !== 'undefined' &&
+                typeof messageData.message.attachment !== 'undefined' &&
+                typeof messageData.message.attachment.payload !== 'undefined' &&
+                typeof messageData.message.attachment.payload.elements !== 'undefined' &&
+                messageData.message.attachment.payload.elements.length >= 1
+            ) ||
+            (
+                typeof messageData.message !== 'undefined' &&
+                typeof messageData.message.text !== 'undefined' &&
+                messageData.message.text.length > 0
+            )
         )) {
         let data = {
             sentDate: new Date(),
-            messageData: messageData.message.attachment.payload.elements[0],
             categories: categories
         };
+        if (typeof messageData.message.attachment !== 'undefined') {
+            data.messageData = messageData.message.attachment.payload.elements[0];
+        } else {
+            data.messageData = {
+                title: messageData.message.text,
+                buttons: [{
+                    type: "web_url",
+                    url: location,
+                    title: "Ubicación"
+                }, {
+                    type: "element_share"
+                }]
+            };
+        }
         let datastore = entities.datastore;
 
         let entity = {
@@ -421,6 +441,8 @@ function callSendAPI(messageData, save = true, categories) {
                 console.error("could not save post", err);
             }
         });
+    } else {
+
     }
 }
 
