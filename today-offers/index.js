@@ -60,7 +60,8 @@ module.exports = function (datastore, userObject) {
 
         let functions = [];
         for (let category of userObject.interest) {
-            createWaterfallFunction(category);
+            if (category !== "NaN" && !isNaN(category))
+                createWaterfallFunction(category);
         }
 
         waterfall(functions, (err, result) => {
