@@ -18,8 +18,8 @@ module.exports = function (datastore, userObject) {
 
     return new Promise((resolve, reject) => {
         let
-            today = moment().format('YYYY-MM-DD'),
-            tomorrow = moment().add(1, 'days').toDate(),
+            today = moment().startOf('day').toDate(),
+            tomorrow = moment().endOf('day').toDate(),
             posts = []
         ;
 
@@ -59,7 +59,7 @@ module.exports = function (datastore, userObject) {
                         {
                             posts.push(post);
                         } else {
-                            console.log('dup');
+                            console.log('dup or not in range');
                         }
                     })
             }
