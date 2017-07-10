@@ -32,6 +32,7 @@ module.exports = function (datastore, userObject) {
 
         function createWaterfallFunction (category) {
             return function (cb) {
+                console.log('querying for', category);
                 let query = datastore.createQuery("Post")
                     .filter('sentDate','>=', new Date(today))
                     .filter('category', '=', category)
