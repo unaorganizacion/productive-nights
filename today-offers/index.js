@@ -25,6 +25,7 @@ module.exports = function (datastore, userObject) {
 
         function checkDup (postEntity) {
             let dup = false;
+            console.log('checkDup', posts);
             for (let post of posts) {
                 if (post.id === postEntity.id) dup = true;
             }
