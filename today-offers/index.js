@@ -52,6 +52,7 @@ module.exports = function (datastore, userObject) {
                         let entitySentDate = moment(entity.sentDate);
                         console.log(entitySentDate.format('YYYY-MM-DD'));
                         if (!checkDup(post)) {
+                            console.log(post);
                             delete post.id;
                             posts.push(post);
                         } else {
@@ -79,7 +80,6 @@ module.exports = function (datastore, userObject) {
                     ;
                     postsElements.push([]);
                     for (let postToElement of posts) {
-                        console.log(postToElement);
                         postsElements[page].push(postToElement);
                         elementsProcessed++;
                         if (elementsProcessed >= 10) {
