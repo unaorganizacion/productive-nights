@@ -11,9 +11,9 @@ const
  */
 module.exports = function (datastore, userObject) {
     function fromDatastore (obj) {
-        // let newObj = obj.messageData;
-        // newObj.id = obj[datastore.KEY].id;
-        return obj;
+        let newObj = obj.messageData;
+        newObj.id = obj[datastore.KEY].id;
+        return newObj;
     }
 
     return new Promise((resolve, reject) => {
@@ -52,6 +52,7 @@ module.exports = function (datastore, userObject) {
                         let entitySentDate = moment(entity.sentDate);
                         console.log(entitySentDate.format('YYYY-MM-DD'));
                         if (!checkDup(post)) {
+                            delete post.id;
                             posts.push(post);
                         } else {
                             console.log('dup or not in range', entitySentDate.isSame(today, 'd'), !checkDup(post));
