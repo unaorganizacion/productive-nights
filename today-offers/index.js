@@ -67,7 +67,7 @@ module.exports = function (datastore, userObject) {
                 if (err) {
                     console.error(err);
                 } else
-                    console.error("today offers query did not throwed results", entities);
+                    console.error("today offers query did not throwed results", userObject.interest);
                 reject();
             }
         });
