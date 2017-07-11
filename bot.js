@@ -92,7 +92,24 @@ app.post('/postMessage', (req, res) => {
                 case 'test':
                     if (req.body.text && !req.body.file) {
                         // todo: change true to false for production
-                        sendTextMessage(1286379258123767, req.body.text, true, req.body.categories, req.body.locationURL);
+                        // sendTextMessage(1286379258123767, req.body.text, true, req.body.categories, req.body.locationURL);
+                        callSendAPI({
+                            recipient: { id: 1286379258123767 },
+                            message: {
+                                text: req.body.text,
+                                attachment: {
+                                    payload: {
+                                        buttons: [{
+                                            type: "web_url",
+                                            url: req.body.locationURL,
+                                            title: "Ubicación"
+                                        }, {
+                                            type: "element_share"
+                                        }]
+                                    }
+                                }
+                            }
+                        })
                     } else if (req.body.file) {
                         let messageData = {
                             recipient: {
@@ -128,7 +145,7 @@ app.post('/postMessage', (req, res) => {
                     }
                     break;
                 case 'production':
-
+                    propagateMessage();
                     break;
             }
         }
