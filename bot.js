@@ -100,7 +100,7 @@ app.post('/postMessage', (req, res) => {
                                     type: "template",
                                     payload: {
                                         template_type: "generic",
-                                        payload: {
+                                        elements: [{
                                             title: req.body.text,
                                             buttons: [{
                                                 type: "web_url",
@@ -109,7 +109,7 @@ app.post('/postMessage', (req, res) => {
                                             }, {
                                                 type: "element_share"
                                             }],
-                                        }
+                                        }]
                                     }
                                 }
                             }
