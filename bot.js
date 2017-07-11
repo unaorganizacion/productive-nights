@@ -105,8 +105,6 @@ app.post('/postMessage', (req, res) => {
                                             type: "web_url",
                                             url: req.body.locationURL,
                                             title: "Ubicación"
-                                        }, {
-                                            type: "element_share"
                                         }]
                                     }
                                 }
