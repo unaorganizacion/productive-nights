@@ -99,12 +99,19 @@ app.post('/postMessage', (req, res) => {
                                 attachment: {
                                     type: "template",
                                     payload: {
-                                        template_type: "button",
-                                        text: req.body.text,
-                                        buttons: [{
-                                            type: "web_url",
-                                            url: req.body.locationURL,
-                                            title: "Ubicación"
+                                        template_type: "generic",
+                                        elements: [{
+                                            title: "Oferta",
+                                            subtitle: req.body.text,
+                                            item_url: req.body.file,
+                                            image_url: req.body.file,
+                                            buttons: [{
+                                                type: "web_url",
+                                                url: req.body.locationURL,
+                                                title: "Ubicación"
+                                            }, {
+                                                type: "element_share"
+                                            }],
                                         }]
                                     }
                                 }
