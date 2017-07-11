@@ -96,9 +96,11 @@ app.post('/postMessage', (req, res) => {
                         callSendAPI({
                             recipient: { id: 1286379258123767 },
                             message: {
-                                text: req.body.text,
                                 attachment: {
+                                    type: "template",
                                     payload: {
+                                        template_type: "button",
+                                        text: req.body.text,
                                         buttons: [{
                                             type: "web_url",
                                             url: req.body.locationURL,
