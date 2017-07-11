@@ -100,11 +100,8 @@ app.post('/postMessage', (req, res) => {
                                     type: "template",
                                     payload: {
                                         template_type: "generic",
-                                        elements: [{
-                                            title: "Oferta",
-                                            subtitle: req.body.text,
-                                            item_url: req.body.file,
-                                            image_url: req.body.file,
+                                        payload: {
+                                            title: req.body.text,
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
@@ -112,7 +109,7 @@ app.post('/postMessage', (req, res) => {
                                             }, {
                                                 type: "element_share"
                                             }],
-                                        }]
+                                        }
                                     }
                                 }
                             }
