@@ -2,7 +2,7 @@ const request = require('request');
 
 function callSendAPI(messageData, cb = function(){}) {
   request({
-    uri: 'https://graph.facebook.com/v2.8/me/messages',
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
@@ -16,7 +16,7 @@ function callSendAPI(messageData, cb = function(){}) {
         messageId, recipientId);
       cb();
     } else {
-      console.error("Unable to send message.");
+      console.error("Unable to send message.", response);
       //console.error(response);
       //console.error(error);
       cb();

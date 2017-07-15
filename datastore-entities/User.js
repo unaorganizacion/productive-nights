@@ -58,7 +58,7 @@ module.exports = function (datastore) {
             var data = {
               mId: id,
               userData: userData,
-              interests: [],
+              interest: [],
               restriction: {
                 level: 0,
               }
@@ -105,7 +105,6 @@ module.exports = function (datastore) {
             }
             // Transaction committed successfully.
             entities.map(fromDatastore);
-            console.log("entities", entities[0]);
             resolve(entities[0]);
           });
       });

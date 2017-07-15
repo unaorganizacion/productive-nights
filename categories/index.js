@@ -70,7 +70,20 @@ let categories = [
     names: {
         "default": "Alitas/Boneless"
     }
+  },
+  {
+    id: 13,
+    names: {
+        "default": "Entretenimiento"
+    }
+  },
+  {
+    id: 14,
+    names: {
+        "default": "Ensaladas"
+    }
   }
+  
 ];
 
 module.exports = categories;

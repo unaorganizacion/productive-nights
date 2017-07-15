@@ -1,5 +1,6 @@
 // today.js
 const sendMessage = require('../tools/sendMessage');
+const todayOffers = require('../today-offers');
 
 let event = function (userObject) {
   this.userObject = userObject;
@@ -13,15 +14,23 @@ event.prototype.setDatastore = function (datastore) {
 
 event.prototype.run = function () {
   //console.log("sending today event to", this.userObject.mId, this.datastore);
-  sendMessage.sendObjectMessage(this.userObject.mId, {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "generic",
-        elements: require('../today-offers')
-      }
-    }
-  });
-}
+    todayOffers(this.datastore, this.userObject).then(postsElements => {
+        console.log('Today offers posts', postsElements);
+        for (let posts of postsElements) {
+            sendMessage.sendObjectMessage(this.userObject.mId, {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "generic",
+                        elements: posts
+                    }
+                }
+            });
+        }
+    }, (e) => {
+        console.error('No today offers error', e);
+        sendMessage.sendTextMessage(this.userObject.mId, 'Infinie tristesse 😭 , aún no hay ofertas, deberías intentar más tarde :D');
+    });
+};
 
 module.exports = event;
