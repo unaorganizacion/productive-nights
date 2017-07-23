@@ -2,7 +2,7 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "Cafe"
+        "default": "Café y Té"
     }
   },
   {
@@ -62,7 +62,7 @@ let categories = [
   {
     id: 11,
     names: {
-        "default": "Vida nocturna"
+        "default": "Antro/Club"
     }
   },
   {
@@ -81,6 +81,18 @@ let categories = [
     id: 14,
     names: {
         "default": "Ensaladas"
+    }
+  },
+  {
+    id: 15,
+    names: {
+        "default": "Bar"
+    }
+  },
+  {
+    id: 16,
+    names: {
+        "default": "Desayunos"
     }
   }
   

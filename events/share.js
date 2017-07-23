@@ -15,7 +15,23 @@ event.prototype.setDatastore = function (datastore) {
 event.prototype.run = function () {
   //console.log("sending today event to", this.userObject.mId, this.datastore);
   let self = this;
-    sendMessage.sendTextMessage(self.userObject.mId, "http://m.me/dealnready", []); 
+  sendMessage.sendAPI({
+                          recipient: { id: self.userObject.mId },
+                          message: {
+                              attachment: {
+                                  type: "template",
+                                  payload: {
+                                      template_type: "generic",
+                                      elements: [{
+                                          title: "Ja! Hiciste clic, ahora tendrás que compartirme :D",
+                                          buttons: [{
+                                              type: "element_share"
+                                          }],
+                                      }]
+                                  }
+                              }
+                          }
+                      });
 };
 
 module.exports = event;

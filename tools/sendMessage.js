@@ -66,4 +66,4 @@ let sendObjectMessage = function(recipientId, message) {
   callSendAPI(messageData);
 };
 
-module.exports = { sendTextMessage: sendTextMessage, sendObjectMessage:sendObjectMessage };
+module.exports = { sendTextMessage: sendTextMessage, sendObjectMessage:sendObjectMessage, sendAPI: callSendAPI };
