@@ -23,7 +23,7 @@ event.prototype.run = function () {
                                   payload: {
                                       template_type: "generic",
                                       elements: [{
-                                          title: "Ja! Hiciste clic, ahora tendrás que compartirme :D",
+                                          title: "😬😬 Fui rebelde y ahora tengo que compartir este mensaje con mis 2 mejores amig@s",
                                           buttons: [{
                                               type: "element_share"
                                           }],
