@@ -5,7 +5,8 @@ let events = [
   "CONTACT_PAYLOAD", // Contacto
   "STARTER_PAYLOAD", // Get started
   "RESUME_OFFERTS_PAYLOAD",
-  "SHARE_PAYLOAD"
+  "SHARE_PAYLOAD",
+  "CONTACT_PAYLOAD"
 ];
 
 // only that day deals

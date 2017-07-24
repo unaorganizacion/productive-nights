@@ -2,7 +2,7 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "Cafe"
+        "default": "Café y Té"
     }
   },
   {
@@ -62,7 +62,7 @@ let categories = [
   {
     id: 11,
     names: {
-        "default": "Vida nocturna"
+        "default": "Antro/Club"
     }
   },
   {
@@ -70,7 +70,32 @@ let categories = [
     names: {
         "default": "Alitas/Boneless"
     }
+  },
+  {
+    id: 13,
+    names: {
+        "default": "Entretenimiento"
+    }
+  },
+  {
+    id: 14,
+    names: {
+        "default": "Ensaladas"
+    }
+  },
+  {
+    id: 15,
+    names: {
+        "default": "Bar"
+    }
+  },
+  {
+    id: 16,
+    names: {
+        "default": "Desayunos"
+    }
   }
+  
 ];
 
 module.exports = categories;

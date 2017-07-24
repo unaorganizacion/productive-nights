@@ -20,13 +20,13 @@ var menu = {
                     "call_to_actions": [
                         {
                             "type": "postback",
-                            "title": "⏯️ Pausar\/Reanudar ofertas",
+                            "title": "⏯️ Pausar\/Reanudar promos",
                             "payload": "TOGGLE_OFFERTS_PAYLOAD"
                         },
                         {
                             "type": "web_url",
                             "title": "💬 Contacto",
-                            "url": "https://m.me/ferisreal/"
+                            "payload": "CONTACT_PAYLOAD"
                         }
                     ]
                 }

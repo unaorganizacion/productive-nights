@@ -126,7 +126,7 @@ app.post('/postMessage', (req, res) => {
                                     payload: {
                                         template_type: "generic",
                                         elements: [{
-                                            title: req.body.text || "Oferta",
+                                            title: req.body.text,
                                             item_url: req.body.file,
                                             image_url: req.body.file,
                                             buttons: [{
@@ -385,7 +385,7 @@ function receivedPostback(event, userObject) {
 //////////////////////////
 // Sending helpers
 //////////////////////////
-function sendTextMessage(recipientId, messageText, save, categories, location) {
+function sendTextMessage(recipientId, messageText, save = false, categories, location) {
     var messageData = {
         recipient: {
             id: recipientId
