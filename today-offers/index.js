@@ -18,15 +18,14 @@ module.exports = function (datastore, userObject) {
 
     return new Promise((resolve, reject) => {
         let
-            today = moment().startOf('day'),
-            tomorrow = moment().endOf('day'),
-            posts = []
+            posts = [],
+            postsIds = []
         ;
 
         function checkDup (postEntity) {
             let dup = false;
             for (let post of posts) {
-                if (post.id === postEntity.id) dup = true;
+                if (postsIds.indexOf(post.id) !== -1) dup = true;
             }
             return dup;
         }
@@ -46,19 +45,18 @@ module.exports = function (datastore, userObject) {
                         return;
                     }
 
-                    //console.log('entity from cat', category, entities);
                     for (let entity of entities) {
                         let post = fromDatastore(entity);
-                        let entitySentDate = moment(entity.sentDate);
-                        console.log(entitySentDate.format('YYYY-MM-DD'));
+                        postsIds.push(post.id);
+
                         if (!checkDup(post)) {
                             posts.push(post);
                         } else {
-                            console.log('dup or not in range', entitySentDate.isSame(today, 'd'), !checkDup(post));
+                            console.log('dup or not in range', !checkDup(post));
                         }
                     }
                     cb();
-                })
+                });
             }
         }
 

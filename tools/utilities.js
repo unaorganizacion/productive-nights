@@ -3,11 +3,11 @@ module.exports = {
     let registeredInterests = [];
     if (interests.length > 0) {
       for (let i in interests) {
-        if (NaN === interests[i]) {
+        if (interests.hasOwnProperty(i) && isNaN(interests[i])) {
           delete interests[i];
           continue;
         }
-        if (registeredInterests.indexOf(interests[i]) !== -1) {
+        if (interests.hasOwnProperty(i) && registeredInterests.indexOf(interests[i]) !== -1) {
           delete interests[i];
           continue;
         }

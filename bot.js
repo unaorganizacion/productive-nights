@@ -7,6 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
 const path = require('path');
+const waterfall = require("async/waterfall");
 let messengerButton = "<html><head><title>Facebook Messenger Bot</title></head><body><h1>Facebook Messenger Bot</h1>This is a bot based on Messenger Platform QuickStart. For more details, see their <a href=\"https://developers.facebook.com/docs/messenger-platform/guides/quick-start\">docs</a>.<script src=\"https://button.glitch.me/button.js\" data-style=\"glitch\"></script><div class=\"glitchButton\" style=\"position:fixed;top:20px;right:20px;\"></div></body></html>";// Imports the Google Cloud client library
 
 const entities = require("./datastore-entities");
@@ -149,7 +150,7 @@ app.post('/postMessage', (req, res) => {
                     }
                     break;
                 case 'production':
-                    propagateMessage();
+                    propagateMessage(req.body);
                     break;
             }
         }
@@ -165,6 +166,99 @@ app.post('/postMessage', (req, res) => {
     }
     res.end();
 });
+
+function propagateMessage(body) {
+    let messageData = {};
+
+    if (body.text && !body.file) {
+        messageData = {
+            recipient: { id: null },
+            message: {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "generic",
+                        elements: [{
+                            title: body.text,
+                            buttons: [{
+                                type: "web_url",
+                                url: body.locationURL,
+                                title: "Ubicación"
+                            }, {
+                                type: "element_share"
+                            }],
+                        }]
+                    }
+                }
+            }
+        };
+    } else if (body.file) {
+        messageData = {
+            recipient: {
+                id: null
+            },
+            message: {
+                attachment: {
+                    type: "template",
+                    payload: {
+                        template_type: "generic",
+                        elements: [{
+                            title: body.text || "Oferta",
+                            item_url: body.file,
+                            image_url: body.file,
+                            buttons: [{
+                                type: "web_url",
+                                url: body.locationURL,
+                                title: "Ubicación"
+                            }, {
+                                type: "element_share"
+                            }],
+                        }]
+                    }
+                }
+            }
+        };
+    }
+
+    let datastore = entities.datastore;
+    let users = [ ], usersIds = [];
+
+    function fromDatastore (obj) {
+        obj.id = obj[datastore.KEY].id;
+        return obj;
+    }
+    function createQueryForWaterfall (category) {
+        return function (cb) {
+            let query = datastore.createQuery("User");
+            query
+                .filter('categories', category);
+
+            query.run((error, entities) => {
+                for (let entity of entities) {
+                    let user = fromDatastore(entity);
+                    if (usersIds.indexOf(user.id) === -1) {
+                        users.push(user);
+                    }
+                }
+                cb();
+            });
+        }
+    }
+
+    let functions = [];
+    for (let category of body.categories) {
+        functions.push(createQueryForWaterfall(category));
+    }
+
+    waterfall(functions, (err, result) => {
+        if (!err) {
+            for (let user of users) {
+                messageData.recipient.id = user;
+                callSendAPI(messageData, true, body.categories);
+            }
+        }
+    });
+}
 
 // Message processing
 app.post('/webhook', function (req, res) {
