@@ -30,7 +30,7 @@ event.prototype.run = function () {
       // console.log("quick replies", categoriesQuickResponse);
       sendMessage.sendTextMessage(self.userObject.mId,
           "De las siguientes categorías selecciona las que sean de tu interés y yo me encargo del resto." +
-          "Cuando gustes podrás cambiar tus intereses en la opción CATEGORÍAS del menú",
+          " Cuando gustes podrás cambiar tus intereses en la opción CATEGORÍAS del menú",
           categoriesQuickResponse, resolve);
     });
   })
