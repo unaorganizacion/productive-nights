@@ -65,7 +65,7 @@ event.prototype.run = function () {
             sendMessage.sendTextMessage(this.userObject.mId, "Se han pausado ofertas y promociones, presiona el botón debajo cuando estés listo para volver a recibirlas :D", [], function() {},
           [{
             "type": "postback",
-            "title": "Reanudar",
+            "title": "⏯️ Reanudar",
             "payload": "RESUME_OFFERTS_PAYLOAD"
           }]);
         else {
