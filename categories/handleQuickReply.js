@@ -102,6 +102,7 @@ module.exports = function (datastore, userObject, quick_reply) {
   let key = datastore.key(["User", parseInt(userObject.id, 10)]);
 
   userObject.interest = utilities.cleanUserInterests(userObject.interest);
+  console.log("clean user interests not error", categories);
 
   const entity = {
     key: key,
