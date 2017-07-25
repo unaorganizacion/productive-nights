@@ -5,11 +5,11 @@ module.exports = {
       try {
           for (let i in interests) {
               if (interests.hasOwnProperty(i) && isNaN(interests[i])) {
-                  delete interests[i];
+                  interests.splice(i, 1);
                   continue;
               }
               if (interests.hasOwnProperty(i) && registeredInterests.indexOf(interests[i]) !== -1) {
-                  delete interests[i];
+                  interests.splice(i, 1);
                   continue;
               }
           }
