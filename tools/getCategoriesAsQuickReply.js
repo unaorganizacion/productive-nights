@@ -8,7 +8,8 @@ module.exports = function (userObject, mode, categories = [], offset = 0) {
   
   categories = require("../tools/compileCategories")(userObject.interest, mode, userObject.userData.locale, offset);
   
-  for (let category of categories) {
+  for (let i in categories) {
+    let category = categories[i];
     if (category.name !== "NEXT") {
       categoriesQuickResponse.push({
         "content_type":"text",
