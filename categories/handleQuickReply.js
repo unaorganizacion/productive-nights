@@ -64,11 +64,13 @@ module.exports = function (datastore, userObject, quick_reply) {
   category.id = parseInt(categorySP[1]);
 
   if (categorySP[1].toLowerCase() === "remove") {
+    try {
     mode = MODE_REMOVE;
     categories = require("../tools/compileCategories")(userObject.userData.interest, mode, userObject.userData.locale, offset);
     let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, MODE_REMOVE, categories, offset);
     console.log("Remove categories button", categoriesQuickResponse);
     sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir", categoriesQuickResponse);
+    } catch (e) { console.log('Hubo un error', e) }
     return;
   }
 

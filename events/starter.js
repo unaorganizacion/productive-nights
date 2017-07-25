@@ -15,8 +15,11 @@ event.prototype.setDatastore = function (datastore) {
 event.prototype.run = function () {
   let self = this;
   new Promise(function (resolve, reject) {
-    sendMessage.sendTextMessage(self.userObject.mId, "Allô !! Mon nom est Dillio et je suis Français. " +
-      "Me crearon con el único propósito de que nunca vuelvas a perderte de una gran oferta o promoción", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, "Allô !! Mon nom est Dillio et je suis Français. ", [], resolve);
+  }).then(function () {
+    return new Promise(function (resolve) {
+    sendMessage.sendTextMessage(self.userObject.mId, "Fui creado con el único propósito de que nunca vuelvas a perderte de una gran oferta o promoción", [], resolve);
+    })
   })
   // todo: select random offer in the pool today-offers
   .then(function () {
