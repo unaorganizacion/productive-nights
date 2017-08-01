@@ -24,18 +24,14 @@ module.exports = function (datastore, userObject) {
 
         function checkDup (postEntity) {
             let dup = false;
-            for (let post of posts) {
-                if (postsIds.indexOf(post.id) !== -1) dup = true;
-            }
+            if (postsIds.indexOf(postEntity.id) !== -1) dup = true;
             return dup;
         }
 
         function createWaterfallFunction (category) {
             return function (cb) {
-                console.log('querying for', category);
                 let query = datastore.createQuery("Post")
-                        .filter('categories', category)
-                    //.filter('sentDate','>=', new Date(today))
+                        .filter('categories', '=', category)
                 ;
                 query.run((err, entities, info) => {
                     if (err) {
@@ -47,10 +43,11 @@ module.exports = function (datastore, userObject) {
 
                     for (let entity of entities) {
                         let post = fromDatastore(entity);
-                        postsIds.push(post.id);
+                        post.sentDate = entity.sentDate;
 
                         if (!checkDup(post)) {
                             posts.push(post);
+                            postsIds.push(post.id);
                         } else {
                             console.log('dup or not in range', !checkDup(post));
                         }
@@ -68,6 +65,19 @@ module.exports = function (datastore, userObject) {
 
         waterfall(functions, (err, result) => {
             if (posts.length > 0) {
+                posts.sort(function(a, b) {
+                  var nameA = new Date(a.sentDate); // ignore upper and lowercase
+                  var nameB = new Date(b.sentDate); // ignore upper and lowercase
+                  if (nameA < nameB) {
+                    return 1;
+                  }
+                  if (nameA > nameB) {
+                    return -1;
+                  }
+                  return 0;
+                });
+              console.log(posts);
+              
                 let postsElements = [];
                 let
                     page = 0,
@@ -76,6 +86,7 @@ module.exports = function (datastore, userObject) {
                 postsElements.push([]);
                 for (let postToElement of posts) {
                     delete postToElement.id;
+                    delete postToElement.sentDate;
                     postsElements[page].push(postToElement);
                     elementsProcessed++;
                     if (elementsProcessed >= 10) {

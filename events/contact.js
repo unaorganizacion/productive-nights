@@ -15,10 +15,10 @@ event.prototype.setDatastore = function (datastore) {
 };
 
 event.prototype.run = function () {
-   sendMessage.sendTextMessage(this.userObject.mId, botMessages.START_SENDING_OFFERS, [], function () {},
+   sendMessage.sendTextMessage(this.userObject.mId, botMessages.SEND_CONTACT, [], function () {},
             [{
-                "type": "postback",
-                "title": botMessages.SEND_CONTACT,
+                "type": "web_url",
+                "title": 'CONTACTO',
                 "url": "https://m.me/ferisreal/"
             }]);
         return;

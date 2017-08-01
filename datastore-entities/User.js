@@ -38,8 +38,8 @@ module.exports = function (datastore) {
           .then(function (userData) {
             //console.log('user data response', userData);
             resolve(userData);
-          }, function () {
-            console.log("facebook data reject");
+          }, function (e) {
+            console.log("facebook data reject", e);
           })
           .catch(function (err) {
             console.log("facebook data error", err);
@@ -52,7 +52,7 @@ module.exports = function (datastore) {
       return new Promise(function (resolve, reject){
         var key = datastore.key("User");
 
-        self.getUserData(id, ["first_name", "last_name", "locale", "timezone"])
+        self.getUserData(id, ["first_name", "last_name", "locale", "timezone", "gender"/*, "email", "birthday"*/])
         .then(
           function (userData) {
             var data = {

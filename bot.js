@@ -88,6 +88,8 @@ app.post('/postMessage', (req, res) => {
             'Content-Type': 'application/json',
         });
 
+      console.log(req.body);
+      
         if (typeof req.body.env !== 'undefined' && req.body.env.length !== null && req.body.env.length > 0) {
             switch (req.body.env) {
                 case 'test':
@@ -144,8 +146,7 @@ app.post('/postMessage', (req, res) => {
                         let users = [1286379258123767, 1649520248421808];
                         for (let user of users) {
                             messageData.recipient.id = user;
-                            // todo: change true to false for production
-                            callSendAPI(messageData, true, req.body.categories);
+                            callSendAPI(messageData, false, req.body.categories);
                         }
                     }
                     break;
@@ -169,8 +170,9 @@ app.post('/postMessage', (req, res) => {
 
 function propagateMessage(body) {
     let messageData = {};
+  console.log(body, body.text && body.file.length < 1);
 
-    if (body.text && !body.file) {
+    if (body.text && body.file.length < 1) {
         messageData = {
             recipient: { id: null },
             message: {
@@ -231,14 +233,18 @@ function propagateMessage(body) {
         return function (cb) {
             let query = datastore.createQuery("User");
             query
-                .filter('categories', category);
+                .filter('interest', '=', category);
 
             query.run((error, entities) => {
+              console.log('result for', typeof category, entities,'error',error);
                 for (let entity of entities) {
+                  if (body.type === 'announcement' || entity.restriction < 2) {
                     let user = fromDatastore(entity);
                     if (usersIds.indexOf(user.id) === -1) {
                         users.push(user);
+                        usersIds.push(user.id);
                     }
+                  }
                 }
                 cb();
             });
@@ -251,10 +257,13 @@ function propagateMessage(body) {
     }
 
     waterfall(functions, (err, result) => {
+      console.log('waterfall results', users, err, result);
         if (!err) {
+          let save = true;
             for (let user of users) {
-                messageData.recipient.id = user;
-                callSendAPI(messageData, true, body.categories);
+                messageData.recipient.id = user.mId;
+                callSendAPI(messageData, save, body.categories, null);
+                save = false;
             }
         }
     });
@@ -476,28 +485,6 @@ function uploadFile(url) {
 }
 
 function callSendAPI(messageData, save = true, categories = [], location = null) {
-    let cb = function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            let recipientId = body.recipient_id;
-            let messageId = body.message_id;
-
-            console.log("Successfully sent generic message with id %s to recipient %s",
-                messageId, recipientId);
-        } else {
-            console.error("Unable to send message.");
-            console.error(response);
-            console.error(error);
-        }
-    };
-
-    // @todo: Get the response and only save when the response is 200
-    request({
-        uri: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
-        method: 'POST',
-        json: messageData
-    }, cb);
-
     function toDatastore(obj, nonIndexed) {
         nonIndexed = nonIndexed || [];
         const results = [];
@@ -513,8 +500,15 @@ function callSendAPI(messageData, save = true, categories = [], location = null)
         });
         return results;
     }
+    let cb = function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            let recipientId = body.recipient_id;
+            let messageId = body.message_id;
 
-    if (save && (
+            console.log("Successfully sent generic message with id %s to recipient %s",
+                messageId, recipientId);
+
+          if (save && (
             (
                 typeof messageData.message !== 'undefined' &&
                 typeof messageData.message.attachment !== 'undefined' &&
@@ -528,39 +522,50 @@ function callSendAPI(messageData, save = true, categories = [], location = null)
                 messageData.message.text.length > 0
             )
         )) {
-        let data = {
-            sentDate: new Date(),
-            categories: categories
-        };
-        if (typeof messageData.message.attachment !== 'undefined') {
-            data.messageData = messageData.message.attachment.payload.elements[0];
-        } else {
-            data.messageData = {
-                title: messageData.message.text,
-                buttons: [{
-                    type: "web_url",
-                    url: location,
-                    title: "Ubicación"
-                }, {
-                    type: "element_share"
-                }]
-            };
-        }
-        let datastore = entities.datastore;
+                let data = {
+                    sentDate: new Date(),
+                    categories: categories
+                };
+                if (typeof messageData.message.attachment !== 'undefined') {
+                    data.messageData = messageData.message.attachment.payload.elements[0];
+                } else {
+                    data.messageData = {
+                        title: messageData.message.text,
+                        buttons: [{
+                            type: "web_url",
+                            url: location,
+                            title: "Ubicación"
+                        }, {
+                            type: "element_share"
+                        }]
+                    };
+                }
+                let datastore = entities.datastore;
 
-        let entity = {
-            key: datastore.key("Post"),
-            data: toDatastore(data)
-        };
+                let entity = {
+                    key: datastore.key("Post"),
+                    data: toDatastore(data)
+                };
 
-        datastore.save(entity, function (err) {
-            if (err) {
-                console.error("could not save post", err);
+                datastore.save(entity, function (err) {
+                    if (err) {
+                        console.error("could not save post", err);
+                    }
+                });
             }
-        });
-    } else {
-
-    }
+        } else {
+            console.error("Unable to send message.");
+            console.error(response);
+            console.error(error);
+        }
+    };
+  
+    request({
+        uri: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'POST',
+        json: messageData
+    }, cb);
 }
 
 // Set Express to listen out for HTTP requests

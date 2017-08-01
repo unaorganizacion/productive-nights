@@ -102,6 +102,7 @@ module.exports = function (datastore, userObject, quick_reply) {
   let key = datastore.key(["User", parseInt(userObject.id, 10)]);
 
   userObject.interest = utilities.cleanUserInterests(userObject.interest);
+  console.log("clean user interests not error", userObject);
 
   const entity = {
     key: key,
@@ -116,8 +117,9 @@ module.exports = function (datastore, userObject, quick_reply) {
         return;
       }
       userObject.id = entity.key.id;
+        console.log("quick replies");
       let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, mode, categories, offset);
-      //console.log("quick replies", categoriesQuickResponse);
+        console.log("quick replies", categoriesQuickResponse);
       if (mode === MODE_ADD)
         sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar HECHO para continuar",
                                     categoriesQuickResponse);
