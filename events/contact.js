@@ -18,7 +18,7 @@ event.prototype.run = function () {
    sendMessage.sendTextMessage(this.userObject.mId, botMessages.SEND_CONTACT, [], function () {},
             [{
                 "type": "web_url",
-                "title": 'CONTACTO',
+                "title": '👉 HUMANO 👈',
                 "url": "https://m.me/ferisreal/"
             }]);
         return;
