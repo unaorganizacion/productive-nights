@@ -2,7 +2,7 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "☕ Café y Té"
+        "default": "Café y Té ☕"
     }
   },
   {
@@ -44,55 +44,61 @@ let categories = [
   {
     id: 8,
     names: {
-        "default": "🦐 Mariscos"
+        "default": "Mariscos 🦐"
     }
   },
   {
     id: 9,
     names: {
-        "default": "🍕 Pizza"
+        "default": "Pizza 🍕"
     }
   },
   {
     id: 10,
     names: {
-        "default": "🍨 Postres"
+        "default": "Postres 🍨"
     }
   },
   {
     id: 11,
     names: {
-        "default": "💃 Antro/Club"
+        "default": "Antro/Club 💃"
     }
   },
   {
     id: 12,
     names: {
-        "default": "🍗 Alitas/Boneless"
+        "default": "Alitas/Boneless 🍗"
     }
   },
   {
     id: 13,
     names: {
-        "default": "🍿 Entretenimiento"
+        "default": "Entretenimiento 🍿"
     }
   },
   {
     id: 14,
     names: {
-        "default": "🥗 Ensaladas"
+        "default": "Ensaladas 🥗"
     }
   },
   {
     id: 15,
     names: {
-        "default": "🍻 Bar"
+        "default": "Bar 🍻"
     }
   },
   {
     id: 16,
     names: {
-        "default": "🍳 Desayunos"
+        "default": "Desayunos 🍳"
+    }
+  },
+  {
+    id: 17,
+    names: {
+        "default": "Cortes/Filetes 🍖"
     }
   }
   
