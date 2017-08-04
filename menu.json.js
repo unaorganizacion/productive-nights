@@ -24,7 +24,7 @@ var menu = {
                             "payload": "TOGGLE_OFFERTS_PAYLOAD"
                         },
                         {
-                            "type": "web_url",
+                            "type": "postback",
                             "title": "💬 Contacto",
                             "payload": "CONTACT_PAYLOAD"
                         }
@@ -34,4 +34,3 @@ var menu = {
         }
     ]
 };
-

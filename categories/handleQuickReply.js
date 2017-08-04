@@ -22,10 +22,6 @@ module.exports = function (datastore, userObject, quick_reply) {
     return results;
   }
 
-  /*if (userObject.restriction.level === 0) {
-    userObject.restriction.level = 1;
-  }*/
-
   let
     categorySP = quick_reply.payload.split('_'),
     categories = [],
@@ -96,13 +92,11 @@ module.exports = function (datastore, userObject, quick_reply) {
   }
 
   // Error showing categories not in interest and saving NaNs in interest. Maybe a clean function
-
   console.log('Prev step', userObject);
 
   let key = datastore.key(["User", parseInt(userObject.id, 10)]);
 
   userObject.interest = utilities.cleanUserInterests(userObject.interest);
-  console.log("clean user interests not error", userObject);
 
   const entity = {
     key: key,
