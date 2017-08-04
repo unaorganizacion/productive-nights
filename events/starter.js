@@ -15,10 +15,10 @@ event.prototype.setDatastore = function (datastore) {
 event.prototype.run = function () {
   let self = this;
   new Promise(function (resolve, reject) {
-    sendMessage.sendTextMessage(self.userObject.mId, "Allô !! Mon nom est Dillio et je suis Français. ", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, " Allô " + self.userObject.userData.first_name + " 👋!! Mon nom est Dillio et je suis Français 🇫🇷", [], resolve);
   }).then(function () {
     return new Promise(function (resolve) {
-    sendMessage.sendTextMessage(self.userObject.mId, "Fui creado con el único propósito de que nunca vuelvas a perderte de una gran oferta o promoción", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, "Mi objetivo es que nunca vuelvas a perderte de una gran oferta o promoción en tu ciudad", [], resolve);
     })
   })
   // todo: select random offer in the pool today-offers
@@ -32,7 +32,7 @@ event.prototype.run = function () {
       ;
       // console.log("quick replies", categoriesQuickResponse);
       sendMessage.sendTextMessage(self.userObject.mId,
-          "De las siguientes categorías selecciona las que sean de tu interés y yo me encargo del resto." +
+          "Tú solo selecciona las categorías que sean de tú interés, el resto déjalo en mis manos 😎." +
           " Cuando gustes podrás cambiar tus intereses en la opción CATEGORÍAS del menú",
           categoriesQuickResponse, resolve);
     });

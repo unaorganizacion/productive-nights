@@ -29,7 +29,7 @@ event.prototype.run = function () {
         }
     }, (e) => {
         console.error('No today offers error', e);
-        sendMessage.sendTextMessage(this.userObject.mId, 'Infinie tristesse 😭, aún no hay ofertas, vuelve a intentar en una hora :D');
+        sendMessage.sendTextMessage(this.userObject.mId, 'Infinie tristesse 😭, aún no hay promos, intenta de nuevo en una hora 😄');
     });
 };
 

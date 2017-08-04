@@ -2,97 +2,103 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "Café y Té"
+        "default": "Café y Té ☕"
     }
   },
   {
     id: 1,
     names: {
-        "default": "Comida Americana"
+        "default": "🍽️ Americana"
     }
   },
   {
     id: 3,
     names: {
-        "default": "Comida China"
+        "default": "🍽️ China"
     }
   },
   {
     id: 4,
     names: {
-        "default": "Comida Italiana"
+        "default": "🍽️ Italiana"
     }
   },
   {
     id: 5,
     names: {
-        "default": "Comida Japonesa"
+        "default": "🍽️ Japonesa"
     }
   },
   {
     id: 6,
     names: {
-        "default": "Comida Mexicana"
+        "default": "🍽️ Mexicana"
     }
   },
   {
     id: 7,
     names: {
-        "default": "Comida Thai"
+        "default": "🍽️ Thai"
     }
   },
   {
     id: 8,
     names: {
-        "default": "Mariscos"
+        "default": "Mariscos 🦐"
     }
   },
   {
     id: 9,
     names: {
-        "default": "Pizza"
+        "default": "Pizza 🍕"
     }
   },
   {
     id: 10,
     names: {
-        "default": "Postres"
+        "default": "Postres 🍨"
     }
   },
   {
     id: 11,
     names: {
-        "default": "Antro/Club"
+        "default": "Antro/Club 💃"
     }
   },
   {
     id: 12,
     names: {
-        "default": "Alitas/Boneless"
+        "default": "Alitas/Boneless 🍗"
     }
   },
   {
     id: 13,
     names: {
-        "default": "Entretenimiento"
+        "default": "Entretenimiento 🍿"
     }
   },
   {
     id: 14,
     names: {
-        "default": "Ensaladas"
+        "default": "Ensaladas 🥗"
     }
   },
   {
     id: 15,
     names: {
-        "default": "Bar"
+        "default": "Bar 🍻"
     }
   },
   {
     id: 16,
     names: {
-        "default": "Desayunos"
+        "default": "Desayunos 🍳"
+    }
+  },
+  {
+    id: 17,
+    names: {
+        "default": "Cortes/Filetes 🍖"
     }
   }
   
