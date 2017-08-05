@@ -7,9 +7,10 @@ const
  * Another option would be to get all the today offers and compare based on the user's categories
  * @param datastore
  * @param userObject
+ * @param day
  * @returns {Promise}
  */
-module.exports = function (datastore, userObject) {
+module.exports = function (datastore, userObject, day = false) {
     function fromDatastore (obj) {
         let newObj = obj.messageData;
         newObj.id = obj[datastore.KEY].id;
@@ -30,8 +31,9 @@ module.exports = function (datastore, userObject) {
 
         function createWaterfallFunction (category) {
             return function createWaterfallFunctionResult (cb) {
+                day = day || moment().tz("America/Chihuahua").format('dddd').toLowerCase();
                 let query = datastore.createQuery("Post")
-                    .filter('day', '=', moment().tz("America/Chihuahua").format('dddd').toLowerCase())
+                    .filter('day', '=', day)
                 ;
 
                 query.run((err, entities, info) => {
