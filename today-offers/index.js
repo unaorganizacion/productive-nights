@@ -30,7 +30,7 @@ module.exports = function (datastore, userObject) {
         }
 
         function createWaterfallFunction (category) {
-            return function (cb) {
+            return function createWaterfallFunctionResult (cb) {
                 let query = datastore.createQuery("Post")
                         .filter('categories', '=', category)
                         .filter('day', '=', moment().tz("America/Chihuahua").format('dddd').toLowerCase())
