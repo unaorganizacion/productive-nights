@@ -342,6 +342,10 @@ function receivedMessage(event, userObject) {
         switch (type) {
             case 'category':
                 folderType = 'categories';
+                break;
+            case 'weekly':
+                folderType = 'weekly';
+                break;
         }
 
         if (folderType.length > 0) {
