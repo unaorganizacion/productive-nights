@@ -262,7 +262,7 @@ function propagateMessage(body) {
           let save = true;
             for (let user of users) {
                 messageData.recipient.id = user.mId;
-                callSendAPI(messageData, save, body.categories, null);
+                callSendAPI(messageData, save, body.categories, null, body.day);
                 save = false;
             }
         }
@@ -484,7 +484,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, save = true, categories = [], location = null) {
+function callSendAPI(messageData, save = true, categories = [], location = null, day = null) {
     function toDatastore(obj, nonIndexed) {
         nonIndexed = nonIndexed || [];
         const results = [];
@@ -524,7 +524,8 @@ function callSendAPI(messageData, save = true, categories = [], location = null)
         )) {
                 let data = {
                     sentDate: new Date(),
-                    categories: categories
+                    categories: categories,
+                    day: day
                 };
                 if (typeof messageData.message.attachment !== 'undefined') {
                     data.messageData = messageData.message.attachment.payload.elements[0];
