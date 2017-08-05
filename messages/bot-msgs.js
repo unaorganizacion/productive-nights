@@ -15,7 +15,8 @@ let msgs =
             FRIDAY: "Viernes",
             SATURDAY: "Sábado",
             SUNDAY: "Domingo",
-        }
+        },
+        WEEKLY_NO_POSTS: 'Infinie tristesse 😭, aún no hay promos, intenta de nuevo en una hora 😄'
     };
 
 module.exports = msgs;
