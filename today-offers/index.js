@@ -1,6 +1,7 @@
 const
-    moment = require('moment'),
-    waterfall = require("async/waterfall")
+    moment = require('moment-timezone'),
+    waterfall = require("async/waterfall"),
+    getDay = require('../tools/getDay')
 ;
 
 /**
@@ -32,7 +33,9 @@ module.exports = function (datastore, userObject) {
             return function (cb) {
                 let query = datastore.createQuery("Post")
                         .filter('categories', '=', category)
+                        .filter('day', '=', moment().tz("America/Chihuahua").format('dddd').toLowerCase())
                 ;
+
                 query.run((err, entities, info) => {
                     if (err) {
                         console.error("Error transation",err);
