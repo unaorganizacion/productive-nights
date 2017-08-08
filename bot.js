@@ -105,6 +105,7 @@ app.post('/postMessage', (req, res) => {
                                         template_type: "generic",
                                         elements: [{
                                             title: req.body.text,
+                                            subtitle: req.body.subtext || null,
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
@@ -129,6 +130,7 @@ app.post('/postMessage', (req, res) => {
                                         template_type: "generic",
                                         elements: [{
                                             title: req.body.text,
+                                            subtitle: req.body.subtext || null,
                                             item_url: req.body.file,
                                             image_url: req.body.file,
                                             buttons: [{
@@ -182,6 +184,7 @@ function propagateMessage(body) {
                         template_type: "generic",
                         elements: [{
                             title: body.text,
+                            subtitle: body.subtext || null,
                             buttons: [{
                                 type: "web_url",
                                 url: body.locationURL,
@@ -205,7 +208,8 @@ function propagateMessage(body) {
                     payload: {
                         template_type: "generic",
                         elements: [{
-                            title: body.text || "Oferta",
+                            title: body.text || "Nueva promo",
+                            subtitle: body.subtext || null,
                             item_url: body.file,
                             image_url: body.file,
                             buttons: [{

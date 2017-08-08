@@ -20,7 +20,7 @@
           "call_to_actions": [
             {
               "type": "postback",
-              "title": "🏷️ Mis intereses",
+              "title": "☝️ Mis intereses",
               "payload": "CATEGORIES_PAYLOAD"
             },
             {

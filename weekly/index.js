@@ -29,7 +29,7 @@ module.exports = function (datastore, userObject, day = false) {
             return dup;
         }
 
-        function createWaterfallFunction (category) {
+        function createWaterfallFunction () {
             return function createWaterfallFunctionResult (cb) {
                 day = day || moment().tz("America/Chihuahua").format('dddd').toLowerCase();
                 let query = datastore.createQuery("Post")
@@ -61,10 +61,10 @@ module.exports = function (datastore, userObject, day = false) {
         }
 
         let functions = [];
-        for (let category of userObject.interest) {
-            if (category !== "NaN" && !isNaN(category))
-                functions.push(createWaterfallFunction(category));
-        }
+        //for (let category of userObject.interest) {
+        //    if (category !== "NaN" && !isNaN(category))
+                functions.push(createWaterfallFunction());
+        //}
 
         waterfall(functions, (err, result) => {
             if (posts.length > 0) {
