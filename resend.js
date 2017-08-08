@@ -32,6 +32,15 @@ query.run((err, entities, info) => {
 
     if (typeof userId !== 'undefined') {
         users.push(parseInt(userId));
+        sendMessage.sendObjectMessage(userId, {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "generic",
+                    elements: [postToElement.messageData]
+                }
+            }
+        });
     } else {
         let usersIds = [];
 
