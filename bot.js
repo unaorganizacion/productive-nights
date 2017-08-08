@@ -105,6 +105,7 @@ app.post('/postMessage', (req, res) => {
                                         template_type: "generic",
                                         elements: [{
                                             title: req.body.text,
+                                            subtitle: req.body.subtext || null,
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
@@ -129,6 +130,7 @@ app.post('/postMessage', (req, res) => {
                                         template_type: "generic",
                                         elements: [{
                                             title: req.body.text,
+                                            subtitle: req.body.subtext || null,
                                             item_url: req.body.file,
                                             image_url: req.body.file,
                                             buttons: [{
@@ -182,6 +184,7 @@ function propagateMessage(body) {
                         template_type: "generic",
                         elements: [{
                             title: body.text,
+                            subtitle: body.subtext || null,
                             buttons: [{
                                 type: "web_url",
                                 url: body.locationURL,
@@ -205,7 +208,8 @@ function propagateMessage(body) {
                     payload: {
                         template_type: "generic",
                         elements: [{
-                            title: body.text || "Oferta",
+                            title: body.text || "Nueva promo",
+                            subtitle: body.subtext || null,
                             item_url: body.file,
                             image_url: body.file,
                             buttons: [{
@@ -262,7 +266,7 @@ function propagateMessage(body) {
           let save = true;
             for (let user of users) {
                 messageData.recipient.id = user.mId;
-                callSendAPI(messageData, save, body.categories, null);
+                callSendAPI(messageData, save, body.categories, null, body.day);
                 save = false;
             }
         }
@@ -342,6 +346,10 @@ function receivedMessage(event, userObject) {
         switch (type) {
             case 'category':
                 folderType = 'categories';
+                break;
+            case 'weekly':
+                folderType = 'weekly';
+                break;
         }
 
         if (folderType.length > 0) {
@@ -484,7 +492,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, save = true, categories = [], location = null) {
+function callSendAPI(messageData, save = true, categories = [], location = null, day = null) {
     function toDatastore(obj, nonIndexed) {
         nonIndexed = nonIndexed || [];
         const results = [];
@@ -524,7 +532,8 @@ function callSendAPI(messageData, save = true, categories = [], location = null)
         )) {
                 let data = {
                     sentDate: new Date(),
-                    categories: categories
+                    categories: categories,
+                    day: day
                 };
                 if (typeof messageData.message.attachment !== 'undefined') {
                     data.messageData = messageData.message.attachment.payload.elements[0];

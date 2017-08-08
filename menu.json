@@ -1,36 +1,37 @@
 {
-  "data": [
+  "persistent_menu": [
     {
-      "persistent_menu": [
+      "locale": "default",
+      "composer_input_disabled": true,
+      "call_to_actions": [
         {
-          "locale": "default",
-          "composer_input_disabled": true,
+          "type": "postback",
+          "title": "🔥 Mis promos de hoy",
+          "payload": "TODAY_PAYLOAD"
+        },
+        {
+          "type": "postback",
+          "title": "🏷️ Ver categor\u00edas",
+          "payload": "WEEKLY_PAYLOAD"
+        },
+        {
+          "type": "nested",
+          "title": "Otros",
           "call_to_actions": [
             {
               "type": "postback",
-              "title": "Lo de hoy",
-              "payload": "TODAY_PAYLOAD"
-            },
-            {
-              "type": "postback",
-              "title": "Categor\u00edas",
+              "title": "☝️ Mis intereses",
               "payload": "CATEGORIES_PAYLOAD"
             },
             {
-              "type": "nested",
-              "title": "Otros",
-              "call_to_actions": [
-                {
-                  "type": "postback",
-                  "title": "Pausar \/ Reanudar mensajes",
-                  "payload": "TOGGLE_OFFERTS_PAYLOAD"
-                },
-                {
-                  "type": "web_url",
-                  "title": "Contacto",
-                  "url": "https://m.me/ferisreal/"
-                }
-              ]
+              "type": "postback",
+              "title": "⏯️ Pausar\/Reanudar promos",
+              "payload": "TOGGLE_OFFERTS_PAYLOAD"
+            },
+            {
+              "type": "postback",
+              "title": "💬 Contacto",
+              "payload": "CONTACT_PAYLOAD"
             }
           ]
         }

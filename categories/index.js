@@ -2,7 +2,7 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "Café y Té ☕"
+        "default": "Café/Té ☕"
     }
   },
   {
@@ -62,7 +62,7 @@ let categories = [
   {
     id: 11,
     names: {
-        "default": "Antro/Club 💃"
+        "default": "Antro/Club 💃🕺"
     }
   },
   {
@@ -86,7 +86,7 @@ let categories = [
   {
     id: 15,
     names: {
-        "default": "Bar 🍻"
+        "default": "Bar/Cerveza 🍻"
     }
   },
   {
@@ -100,7 +100,55 @@ let categories = [
     names: {
         "default": "Cortes/Filetes 🍖"
     }
-  }
+  },
+  {
+    id: 18,
+    names: {
+        "default": "Hamburguesas 🍔"
+    }
+  },
+  {
+    id: 19,
+    names: {
+        "default": "Tacos 🌮"
+    }
+  },
+  {
+    id: 20,
+    names: {
+        "default": "Ellas 👸"
+    }
+  },
+  {
+    id: 21,
+    names: {
+        "default": "Sushi/Bola 🍣"
+    }
+  },
+  {
+    id: 22,
+    names: {
+        "default": "Niños 🍬"
+    }
+  },
+  {
+    id: 23,
+    names: {
+        "default": "Bebidas 🍹"
+    }
+  },
+  {
+    id: 24,
+    names: {
+        "default": "Cumpleaños 🎉"
+    }
+  },
+  {
+    id: 25,
+    names: {
+        "default": "Vinos 🍷"
+    }
+  }                
   
 ];
 
