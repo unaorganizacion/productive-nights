@@ -32,8 +32,27 @@ module.exports = function (datastore, userObject, quick_reply) {
         }
 
         if (categories.length >= 1) {
-            scheduled(datastore, userObject, categories).then(() => {
-                console.log('scheduled event ended');
+            scheduled(datastore, userObject, categories).then(postsElements => {
+                console.log(categories, 'scheduled posts', postsElements);
+                for (let posts of postsElements) {
+                    sendMessage.sendObjectMessage(userObject.mId, {
+                        attachment: {
+                            type: "template",
+                            payload: {
+                                template_type: "generic",
+                                elements: posts
+                            }
+                        }
+                    });
+                }
+            }, (e) => {
+                console.error(`No ${categoriesRaw} posts error`, e);
+                sendMessage.sendTextMessage(userObject.mId, botMessages.WEEKLY_NO_POSTS, [], function(){},
+                    [{
+                        "type": "postback",
+                        "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                        "payload": "WEEKLY_PAYLOAD"
+                    }]);
             });
         } else {
             console.log('No categories found');
