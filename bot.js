@@ -109,7 +109,7 @@ app.post('/postMessage', (req, res) => {
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
-                                                title: "Ubicación"
+                                                title: "📍 Ubicación"
                                             }, {
                                                 type: "element_share"
                                             }],
@@ -136,7 +136,7 @@ app.post('/postMessage', (req, res) => {
                                             buttons: [{
                                                 type: "web_url",
                                                 url: req.body.locationURL,
-                                                title: "Ubicación"
+                                                title: "📍 Ubicación"
                                             }, {
                                                 type: "element_share"
                                             }],
@@ -188,7 +188,7 @@ function propagateMessage(body) {
                             buttons: [{
                                 type: "web_url",
                                 url: body.locationURL,
-                                title: "Ubicación"
+                                title: "📍 Ubicación"
                             }, {
                                 type: "element_share"
                             }],
@@ -215,7 +215,7 @@ function propagateMessage(body) {
                             buttons: [{
                                 type: "web_url",
                                 url: body.locationURL,
-                                title: "Ubicación"
+                                title: "📍 Ubicación"
                             }, {
                                 type: "element_share"
                             }],
@@ -543,7 +543,7 @@ function callSendAPI(messageData, save = true, categories = [], location = null,
                         buttons: [{
                             type: "web_url",
                             url: location,
-                            title: "Ubicación"
+                            title: "📍 Ubicación"
                         }, {
                             type: "element_share"
                         }]

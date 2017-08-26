@@ -15,10 +15,10 @@ event.prototype.setDatastore = function (datastore) {
 event.prototype.run = function () {
   let self = this;
   new Promise(function (resolve, reject) {
-    sendMessage.sendTextMessage(self.userObject.mId, " Allô " + self.userObject.userData.first_name + " 👋!! Mi nombre es Dilio et je suis Français 🇫🇷", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, "Allo " + self.userObject.userData.first_name + " 👋! Mon nom est Gabito y soy un pan francés 🇫🇷", [], resolve);
   }).then(function () {
     return new Promise(function (resolve) {
-    sendMessage.sendTextMessage(self.userObject.mId, "Mi objetivo es que nunca vuelvas a perderte de una gran oferta o promoción en tu ciudad", [], resolve);
+    sendMessage.sendTextMessage(self.userObject.mId, "¿Quieres salir en Chihuahua pero no sabes a dónde? ¡Yo te ayudo! Conozco las mejores ofertas y promociones de la ciudad", [], resolve);
     })
   })
   // todo: select random offer in the pool today-offers
@@ -32,8 +32,8 @@ event.prototype.run = function () {
       ;
       // console.log("quick replies", categoriesQuickResponse);
       sendMessage.sendTextMessage(self.userObject.mId,
-          "Tú solo selecciona las categorías que sean de tú interés, el resto déjalo en mis manos 😎." +
-          " Cuando gustes podrás cambiar tus intereses en la opción \"Otros > ☝️ Mis intereses\" del menú",
+          "Para enterarte en caliente ⚡ de las mejores ofertas y promociones para ti, selecciona las categorías que sean de tu interés. Yo te avisaré cuando encuentre algo 😎" +
+          "\u000ACuando gustes podrás cambiar tus intereses en el menú de abajo en la opción \"Otros > ☝️ Mis intereses\"",
           categoriesQuickResponse, resolve);
     });
   })

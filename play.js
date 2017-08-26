@@ -13,8 +13,8 @@ let
     posts = []
 ;
 
-let query = datastore.createQuery("Post")
-        // .filter('interest', '=', 0)
+let query = datastore.createQuery("User")
+        .filter('interest', '=', 20)
         // .filter('interest', '=', 1)
     //.filter('sentDate','>=', today)
 ;

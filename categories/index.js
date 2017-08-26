@@ -2,7 +2,7 @@ let categories = [
   {
     id: 0,
     names: {
-        "default": "Café/Té ☕"
+        "default": "Café y Té ☕"
     }
   },
   {
@@ -86,7 +86,7 @@ let categories = [
   {
     id: 15,
     names: {
-        "default": "Bar/Cerveza 🍻"
+        "default": "Bar y Cerveza 🍻"
     }
   },
   {
@@ -146,9 +146,15 @@ let categories = [
   {
     id: 25,
     names: {
-        "default": "Vinos 🍷"
+        "default": "A domicilio 🛵"
     }
-  }                
+  },
+  {
+    id: 26,
+    names: {
+        "default": "Paquetes fam. 👪"
+    }
+  }         
   
 ];
 

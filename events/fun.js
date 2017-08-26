@@ -23,7 +23,7 @@ event.prototype.run = function () {
                                   payload: {
                                       template_type: "generic",
                                       elements: [{
-                                          title: "Mira mira mira! Miraaaa",
+                                          title: "😬😬 Fui rebelde y ahora tengo que compartir este mensaje con mis 2 mejores amig@s",
                                           buttons: [{
                                               type: "element_share"
                                           }],

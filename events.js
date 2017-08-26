@@ -5,6 +5,7 @@ let events = [
     "CONTACT_PAYLOAD", // Contacto
     "STARTER_PAYLOAD", // Get started
     "RESUME_OFFERTS_PAYLOAD",
+    "FUN_PAYLOAD",
     "SHARE_PAYLOAD",
     "CONTACT_PAYLOAD",
     "WEEKLY_PAYLOAD"

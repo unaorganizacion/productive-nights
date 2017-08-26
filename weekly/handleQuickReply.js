@@ -22,6 +22,11 @@ module.exports = function (datastore, userObject, quick_reply) {
         }
     }, (e) => {
         console.error(`No ${day} offers error`, e);
-        sendMessage.sendTextMessage(userObject.mId, botMessages.WEEKLY_NO_POSTS);
+        sendMessage.sendTextMessage(userObject.mId, botMessages.WEEKLY_NO_POSTS, [], function(){},
+                              [{
+                                "type": "postback",
+                                "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                                "payload": "WEEKLY_PAYLOAD"
+                              }]);
     });
 };

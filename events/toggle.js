@@ -71,15 +71,20 @@ event.prototype.run = function () {
         else {
             sendMessage.sendTextMessage(this.userObject.mId, botMessages.START_SENDING_OFFERS, [], function () {},
                 [{
-                    "type": "postback",
-                    "title": botMessages.START_SENDING_OFFERS_BUTTON1,
-                    "payload": "TODAY_PAYLOAD"
-                },
-                {
-                    "type": "postback",
-                    "title": botMessages.START_SENDING_OFFERS_BUTTON2,
-                    "payload": "SHARE_PAYLOAD"
-                }]);
+            "type": "postback",
+            "title": botMessages.START_SENDING_OFFERS_BUTTON1,
+            "payload": "TODAY_PAYLOAD"
+        },
+        {
+            "type": "postback",
+            "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+            "payload": "WEEKLY_PAYLOAD"
+        },
+        {
+            "type": "postback",
+            "title": botMessages.START_SENDING_OFFERS_BUTTON3,
+            "payload": "FUN_PAYLOAD"
+        }]);
         }
     });
 };

@@ -52,7 +52,12 @@ module.exports = function (datastore, userObject, quick_reply) {
                               {
                                 "type": "postback",
                                 "title": botMessages.START_SENDING_OFFERS_BUTTON2,
-                                "payload": "SHARE_PAYLOAD"
+                                "payload": "WEEKLY_PAYLOAD"
+                              },
+                              {
+                                "type": "postback",
+                                "title": botMessages.START_SENDING_OFFERS_BUTTON3,
+                                "payload": "FUN_PAYLOAD"
                               }]);
     return;
   }

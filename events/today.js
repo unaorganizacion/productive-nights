@@ -1,6 +1,7 @@
 // today.js
 const sendMessage = require('../tools/sendMessage');
 const todayOffers = require('../today-offers');
+let botMessages = require('../messages/bot-msgs');
 
 let event = function (userObject) {
   this.userObject = userObject;
@@ -29,7 +30,12 @@ event.prototype.run = function () {
         }
     }, (e) => {
         console.error('No today offers error', e);
-        sendMessage.sendTextMessage(this.userObject.mId, 'Infinie tristesse 😭, aún no hay promos, intenta de nuevo en una hora 😄');
+        sendMessage.sendTextMessage(this.userObject.mId, botMessages.WEEKLY_NO_POSTS, [], function(){},
+                              [{
+                                "type": "postback",
+                                "title": botMessages.START_SENDING_OFFERS_BUTTON2,
+                                "payload": "WEEKLY_PAYLOAD"
+                              }]);
     });
 };
 

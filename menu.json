@@ -11,7 +11,7 @@
         },
         {
           "type": "postback",
-          "title": "🏷️ Ver categor\u00edas",
+          "title": "📅 Promos por día",
           "payload": "WEEKLY_PAYLOAD"
         },
         {
@@ -27,6 +27,11 @@
               "type": "postback",
               "title": "⏯️ Pausar\/Reanudar promos",
               "payload": "TOGGLE_OFFERTS_PAYLOAD"
+            },
+            {
+              "type": "postback",
+              "title": "❤️ Compartir",
+              "payload": "SHARE_PAYLOAD"
             },
             {
               "type": "postback",
