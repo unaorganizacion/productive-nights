@@ -340,7 +340,7 @@ function receivedMessage(event, userObject) {
     if (isQuickReply) {
         let
             type = message.quick_reply.payload.toLowerCase().split("_")[0],
-            folderType
+            folderType = ''
         ;
 
         switch (type) {
@@ -349,6 +349,9 @@ function receivedMessage(event, userObject) {
                 break;
             case 'weekly':
                 folderType = 'weekly';
+                break;
+            case 'scheduled':
+                folderType = 'scheduled';
                 break;
         }
 
