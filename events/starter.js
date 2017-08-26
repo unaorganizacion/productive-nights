@@ -32,7 +32,7 @@ event.prototype.run = function () {
       ;
       // console.log("quick replies", categoriesQuickResponse);
       sendMessage.sendTextMessage(self.userObject.mId,
-          "Para enterarte en caliente ⚡ de las mejores ofertas y promociones para ti, selecciona las categorías que sean de tu interés. Yo te avisaré cuando encuentre algo 😎" +
+          "Selecciona las categorías que sean de tu interés y entérate en caliente 🔥 cuando haya algo nuevo para ti. Tú no te preocupes, yo te avisaré cuando encuentre algo 😎." +
           "\u000ACuando gustes podrás cambiar tus intereses en el menú de abajo en la opción \"Otros > ☝️ Mis intereses\"",
           categoriesQuickResponse, resolve);
     });
