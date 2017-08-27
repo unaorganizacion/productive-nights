@@ -1,7 +1,8 @@
 const
     scheduled = require('./'),
     botMessages = require('../messages/bot-msgs'),
-    sendMessage = require('../tools/sendMessage')
+    sendMessage = require('../tools/sendMessage'),
+    waterfall = require("async/waterfall")
 ;
 
 module.exports = function (datastore, userObject, quick_reply) {
@@ -34,17 +35,27 @@ module.exports = function (datastore, userObject, quick_reply) {
         if (categories.length >= 1) {
             scheduled(datastore, userObject, categories).then(postsElements => {
                 console.log(categories, 'scheduled posts', postsElements);
-                for (let posts of postsElements) {
-                    sendMessage.sendObjectMessage(userObject.mId, {
-                        attachment: {
-                            type: "template",
-                            payload: {
-                                template_type: "generic",
-                                elements: posts
+                function createWaterfallFunctionPostsSets (posts) {
+                    return function (cb) {
+                        sendMessage.sendObjectMessage(userObject.mId, {
+                            attachment: {
+                                type: "template",
+                                payload: {
+                                    template_type: "generic",
+                                    elements: posts
+                                }
                             }
-                        }
-                    });
+                        }, cb);
+                    }
                 }
+                let functions = [];
+                for (let posts of postsElements) {
+                    functions.push(createWaterfallFunctionPostsSets(posts));
+                }
+
+                waterfall(functions, () => {
+                    sendMessage.sendTextMessage(userObject.mId, '😚');
+                });
             }, (e) => {
                 console.error(`No ${categoriesRaw} posts error`, e);
                 sendMessage.sendTextMessage(userObject.mId, botMessages.WEEKLY_NO_POSTS, [], function(){},

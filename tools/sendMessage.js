@@ -55,7 +55,7 @@ let sendTextMessage = function (recipientId, messageText, quick_replies = [], cb
   callSendAPI(messageData, cb);
 };
 
-let sendObjectMessage = function(recipientId, message) {
+let sendObjectMessage = function(recipientId, message, cb = function(){}) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -63,7 +63,7 @@ let sendObjectMessage = function(recipientId, message) {
     message: message
   };  
 
-  callSendAPI(messageData);
+  callSendAPI(messageData, cb);
 };
 
 module.exports = { sendTextMessage: sendTextMessage, sendObjectMessage:sendObjectMessage, sendAPI: callSendAPI };
