@@ -58,7 +58,6 @@ waterfall(functions, (err, result) => {
                     ],
                     function () {}
                 );
-          break;
         }
     }
 });
