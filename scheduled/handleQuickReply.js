@@ -50,12 +50,12 @@ module.exports = function (datastore, userObject, quick_reply) {
                 }
                 let functions = [];
                 for (let posts of postsElements) {
-                    if (response > 1)
                         functions.push(createWaterfallFunctionPostsSets(posts));
                 }
 
                 waterfall(functions, () => {
-                    sendMessage.sendTextMessage(userObject.mId, '😚');
+                    if (response > 1)
+                        sendMessage.sendTextMessage(userObject.mId, '😚');
                 });
             }, (e) => {
                 console.error(`No ${categoriesRaw} posts error`, e);
