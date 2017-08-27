@@ -39,10 +39,10 @@ waterfall(functions, (err, result) => {
         console.error('error waterfall');
     } else {
         for (let user of users) {
-            console.log('sending SHCEDULE message to user ',user.mId);
+            console.log('sending SCHEDULED message to user ',user.mId);
             sendMessage
                 .sendTextMessage(
-                    user.mId,
+                    1321637131264381,//user.mId,
                     process.argv[2],
                     [
                         {
@@ -58,6 +58,7 @@ waterfall(functions, (err, result) => {
                     ],
                     function () {}
                 );
+          break;
         }
     }
 });
