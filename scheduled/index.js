@@ -1,4 +1,4 @@
-const waterfall = require("async/waterfall");
+const moment = require('moment-timezone'),waterfall = require("async/waterfall");
 
 /**
  * Another option would be to get all the today offers and compare based on the user's categories
@@ -30,6 +30,7 @@ module.exports = function (datastore, userObject, categories = []) {
             return function createWaterfallFunctionResult (cb) {
                 let query = datastore.createQuery("Post")
                     .filter('categories', '=', category)
+                    .filter('day', '=', moment().tz("America/Chihuahua").format('dddd').toLowerCase())
                 ;
 
                 query.run((err, entities, info) => {

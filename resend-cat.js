@@ -14,8 +14,6 @@ let usersIds = [];
 function createQueryForWaterfall () {
     return function (cb) {
         let query = datastore.createQuery("User");
-        query
-            .filter('restriction', '<', 2);
 
         query.run((error, entities) => {
             if (error)
@@ -41,10 +39,10 @@ waterfall(functions, (err, result) => {
         console.error('error waterfall');
     } else {
         for (let user of users) {
-            console.log('sending SHCEDULE message to user ',user.mId);
+            console.log('sending SCHEDULED message to user ',user.mId);
             sendMessage
                 .sendTextMessage(
-                    1649520248421808,
+                    1321637131264381,//user.mId,
                     process.argv[2],
                     [
                         {
@@ -60,6 +58,7 @@ waterfall(functions, (err, result) => {
                     ],
                     function () {}
                 );
+          break;
         }
     }
 });
