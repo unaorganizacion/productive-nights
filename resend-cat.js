@@ -44,7 +44,7 @@ waterfall(functions, (err, result) => {
             console.log('sending SHCEDULE message to user ',user.mId);
             sendMessage
                 .sendTextMessage(
-                    1649520248421808,
+                    user.mId,
                     process.argv[2],
                     [
                         {
