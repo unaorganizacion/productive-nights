@@ -14,8 +14,6 @@ let usersIds = [];
 function createQueryForWaterfall () {
     return function (cb) {
         let query = datastore.createQuery("User");
-        query
-            .filter('restriction', '<', 2);
 
         query.run((error, entities) => {
             if (error)
