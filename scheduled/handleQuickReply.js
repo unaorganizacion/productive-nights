@@ -21,7 +21,7 @@ module.exports = function (datastore, userObject, quick_reply) {
                     {
                         "content_type": "text",
                         "title": botMessages.SCHEDULED_WELL_YES,
-                        "payload": `SCHEDULED_1_${categoriesRaw}`
+                        "payload": `SCHEDULED_2_${categoriesRaw}`
                     }
                 ],
                 function () {}
@@ -50,7 +50,8 @@ module.exports = function (datastore, userObject, quick_reply) {
                 }
                 let functions = [];
                 for (let posts of postsElements) {
-                    functions.push(createWaterfallFunctionPostsSets(posts));
+                    if (response > 1)
+                        functions.push(createWaterfallFunctionPostsSets(posts));
                 }
 
                 waterfall(functions, () => {
