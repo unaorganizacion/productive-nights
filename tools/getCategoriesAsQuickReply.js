@@ -35,7 +35,7 @@ module.exports = function (userObject, mode, categories = [], offset = 0) {
   if (insertNextButton) {
     categoriesQuickResponse.push({
       "content_type": "text",
-      "title": "MÁS",
+      "title": "⏪MÁS",
       "payload": `CATEGORY_NEXT_${nextButtonIndex}_${mode}`
     });
   }

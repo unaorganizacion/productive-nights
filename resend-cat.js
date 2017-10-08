@@ -42,7 +42,7 @@ waterfall(functions, (err, result) => {
             console.log('sending SCHEDULED message to user ',user.mId);
             sendMessage
                 .sendTextMessage(
-                    1321637131264381,//user.mId,
+                    user.mId,//1321637131264381,
                     process.argv[2],
                     [
                         {
@@ -58,7 +58,6 @@ waterfall(functions, (err, result) => {
                     ],
                     function () {}
                 );
-          break;
         }
     }
 });

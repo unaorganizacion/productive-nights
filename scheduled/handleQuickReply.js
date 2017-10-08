@@ -21,7 +21,7 @@ module.exports = function (datastore, userObject, quick_reply) {
                     {
                         "content_type": "text",
                         "title": botMessages.SCHEDULED_WELL_YES,
-                        "payload": `SCHEDULED_1_${categoriesRaw}`
+                        "payload": `SCHEDULED_2_${categoriesRaw}`
                     }
                 ],
                 function () {}
@@ -50,11 +50,12 @@ module.exports = function (datastore, userObject, quick_reply) {
                 }
                 let functions = [];
                 for (let posts of postsElements) {
-                    functions.push(createWaterfallFunctionPostsSets(posts));
+                        functions.push(createWaterfallFunctionPostsSets(posts));
                 }
 
                 waterfall(functions, () => {
-                    sendMessage.sendTextMessage(userObject.mId, '😚');
+                    if (response > 1)
+                        sendMessage.sendTextMessage(userObject.mId, '😚');
                 });
             }, (e) => {
                 console.error(`No ${categoriesRaw} posts error`, e);

@@ -275,6 +275,7 @@ function propagateMessage(body) {
 
 // Message processing
 app.post('/webhook', function (req, res) {
+ //return;
     console.log(req.body);
     // tood: get user or register user
     var data = req.body;
@@ -365,16 +366,16 @@ function receivedMessage(event, userObject) {
     if (messageText) {
         // If we receive a text message, check to see if it matches a keyword
         // and send back the template example. Otherwise, just echo the text we received.
-        switch (messageText) {
+      sendGenericMessage(senderID);
+        /* switch (messageText) {
             case 'generic':
                 sendGenericMessage(senderID);
                 break;
-
             default:
                 sendTextMessage(senderID, messageText.split('').reverse().join(''));
-        }
+        }*/
     } else if (messageAttachments) {
-        sendTextMessage(senderID, "Message with attachment received");
+        sendGenericMessage(senderID);
     }
 }
 
@@ -405,65 +406,45 @@ function receivedPostback(event, userObject) {
 //////////////////////////
 // Sending helpers
 //////////////////////////
-function sendTextMessage(recipientId, messageText, save = false, categories, location) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            text: messageText
-        }
-    };
+let sendTextMessage = function (recipientId, messageText, quick_replies = [], cb = function(){}, buttons = []) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: messageText
+    }
+  };
+  
+  if (quick_replies.length > 0) {
+    messageData['message']['quick_replies'] = quick_replies;
+    console.log("quick_replies length", quick_replies.length);
+  }
+  //console.log("buttonsl ength", buttons.length);
+  if (buttons.length > 0) {
+    delete messageData["message"]["text"];
+    
+    messageData["message"]["attachment"] = {};
+    messageData["message"]["attachment"]["type"] = "template";
+    messageData["message"]["attachment"]["payload"] = {};
+    messageData["message"]["attachment"]["payload"]["template_type"] = "button";
+    messageData["message"]["attachment"]["payload"]["text"] = messageText;
+    messageData["message"]["attachment"]["payload"]["buttons"] = buttons;
+    
+    console.log("Buttons length", messageData["message"]["attachment"]["payload"]["buttons"].length);
+  }
 
-    callSendAPI(messageData, save, categories, location);
-}
+  callSendAPI(messageData, false, [], null, null, cb);
+};
 
 function sendGenericMessage(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "generic",
-                    elements: [{
-                        title: "rift",
-                        subtitle: "Next-generation virtual reality",
-                        item_url: "https://www.oculus.com/en-us/rift/",
-                        image_url: "http://messengerdemo.parseapp.com/img/rift.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/rift/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for first bubble",
-                        }],
-                    }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
-                        item_url: "https://www.oculus.com/en-us/touch/",
-                        image_url: "http://messengerdemo.parseapp.com/img/touch.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/touch/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for second bubble",
-                        }]
-                    }]
-                }
-            }
-        }
-    };
-
-    callSendAPI(messageData);
-}
+    sendTextMessage(recipientId, "Mon amie! Yo no funcionar en la versión Lite de Facebook o de Messeger 😓 \u000APuedes usar la versiones regulares de las apps o en la compu con los siguientes enlaces https://www.facebook.com/messages/t/dealnready/ o https://m.me/dealnready/ \u000ASi no estás usando las versiones Lite, dime qué dispositivo usas para poder ayudarte.\u000A¿Algún otro problema? Escríbenos en Facebook 😄 \u000Ahttps://www.facebook.com/dealnready/", function () {},
+            [{
+                "type": "web_url",
+                "title": 'FACEBOOK',
+                "url": "https://www.facebook.com/dealnready/"
+            }]);
+};
 
 function uploadFile(url) {
     return new Promise((resolve, reject) => {
@@ -495,7 +476,7 @@ function uploadFile(url) {
     });
 }
 
-function callSendAPI(messageData, save = true, categories = [], location = null, day = null) {
+function callSendAPI(messageData, save = true, categories = [], location = null, day = null, alternativeCb = null) {
     function toDatastore(obj, nonIndexed) {
         nonIndexed = nonIndexed || [];
         const results = [];
@@ -571,6 +552,10 @@ function callSendAPI(messageData, save = true, categories = [], location = null,
             console.error(error);
         }
     };
+  
+    if (typeof alternativeCb === "function") {
+      cb = alternativeCb;
+    }
   
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',

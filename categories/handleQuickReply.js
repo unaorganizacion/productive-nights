@@ -70,7 +70,7 @@ module.exports = function (datastore, userObject, quick_reply) {
     categories = require("../tools/compileCategories")(userObject.userData.interest, mode, userObject.userData.locale, offset);
     let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, MODE_REMOVE, categories, offset);
     console.log("Remove categories button", categoriesQuickResponse);
-    sendMessage.sendTextMessage(userObject.mId, "Estás son las categorías que sigues actualmente, selecciona las que quieras dejar de seguir", categoriesQuickResponse);
+    sendMessage.sendTextMessage(userObject.mId, "Estos son los intereses que sigues actualmente, selecciona los que quieras dejar de seguir", categoriesQuickResponse);
     } catch (e) { console.log('Hubo un error', e) }
     return;
   }
@@ -121,10 +121,10 @@ module.exports = function (datastore, userObject, quick_reply) {
       let categoriesQuickResponse = require("../tools/getCategoriesAsQuickReply")(userObject, mode, categories, offset);
         console.log("quick replies", categoriesQuickResponse);
       if (mode === MODE_ADD)
-        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más categorías o seleccionar HECHO para continuar",
+        sendMessage.sendTextMessage(userObject.mId, "Puedes seguir más intereses o seleccionar HECHO para continuar",
                                     categoriesQuickResponse);
       else if (mode === MODE_REMOVE)
-        sendMessage.sendTextMessage(userObject.mId, "Listo, ¿alguna otra categoría que quieras quitar de tus intereses?, También puedes seleccionar HECHO si deseas terminar",
+        sendMessage.sendTextMessage(userObject.mId, "Listo, ¿algún otro interés que quieras dejar de seguir?, También puedes seleccionar HECHO si deseas terminar",
                                     categoriesQuickResponse);
     }
   );

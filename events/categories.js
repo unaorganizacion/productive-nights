@@ -22,7 +22,7 @@ event.prototype.run = function () {
     return new Promise(function (resolve) {   */
       sendMessage.sendTextMessage(
         self.userObject.mId,
-        "Selecciona AGREGAR para seguir más categorías o QUITAR para dejar de seguirlas",
+        "¿Quieres AGREGAR o QUITAR intereses?",
                                    [ {
                                       "content_type": "text",
                                       "title": "Agregar",
@@ -31,10 +31,6 @@ event.prototype.run = function () {
                                       "content_type": "text",
                                       "title": "Quitar",
                                       "payload": `CATEGORY_REMOVE`
-                                    },{
-                                      "content_type": "text",
-                                      "title": "Salir",
-                                      "payload": `CATEGORY_END`
                                     }], resolve);
     });
 };

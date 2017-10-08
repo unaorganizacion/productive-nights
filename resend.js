@@ -19,7 +19,6 @@ query.run((err, entities, info) => {
     if (err) {
         console.error("Error transation",err);
         // probably no results
-        cb();
         return;
     }
 

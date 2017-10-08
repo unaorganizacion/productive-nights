@@ -8,37 +8,37 @@ let categories = [
   {
     id: 1,
     names: {
-        "default": "🍽️ Americana"
+        "default": "🇺🇸 Americana"
     }
   },
   {
     id: 3,
     names: {
-        "default": "🍽️ China"
+        "default": "🇨🇳 Oriental"
     }
   },
   {
     id: 4,
     names: {
-        "default": "🍽️ Italiana"
+        "default": "🇮🇹 Italiana"
     }
   },
   {
     id: 5,
     names: {
-        "default": "🍽️ Japonesa"
+        "default": "🇯🇵 Japonesa"
     }
   },
   {
     id: 6,
     names: {
-        "default": "🍽️ Mexicana"
+        "default": "🇲🇽 Mexicana"
     }
   },
   {
     id: 7,
     names: {
-        "default": "🍽️ Thai"
+        "default": "🇹🇭 Thai"
     }
   },
   {
@@ -154,8 +154,32 @@ let categories = [
     names: {
         "default": "Paquetes fam. 👪"
     }
-  }         
-  
+  },
+  {
+    id: 27,
+    names: {
+        "default": "Parejas 💑"
+    }
+  },
+  {
+    id: 28,
+    names: {
+        "default": "Antojos/Botanas 🌭🍟"
+    }
+  }, //29 SPECIAL
+  {
+    id: 30,
+    names: {
+        "default": "Universitarios 🎓"
+    }
+  },
+  {
+    id: 31,
+    names: {
+        "default": "Buffet 🍴"
+    }
+  } //32 Algo tranqui
+ 
 ];
 
 module.exports = categories;

@@ -20,6 +20,11 @@ event.prototype.run = function () {
                 "type": "web_url",
                 "title": '👉 HUMANO 👈',
                 "url": "https://m.me/ferisreal/"
+            },
+            {
+                "type": "web_url",
+                "title": 'FACEBOOK',
+                "url": "https://www.facebook.com/dealnready/"
             }]);
         return;
 };
